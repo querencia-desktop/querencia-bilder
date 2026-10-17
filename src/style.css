@@ -1,0 +1,78 @@
+/* Querencia Bilder – klassische Optik (Ambiance-Farbwerte wie Panel und
+   Querencia Files; keine fremden Bilder oder Theme-Dateien übernommen). */
+
+window.qb-window menubar {
+  background-color: #f2f1f0;
+  border-bottom: 1px solid #c7c2be;
+  padding: 1px 2px;
+}
+
+window.qb-window menubar > item {
+  padding: 3px 8px;
+  color: #3c3c3c;
+}
+
+window.qb-window menubar > item:hover,
+window.qb-window menubar > item:selected {
+  background-image: linear-gradient(to bottom, #f6a179, #f07746);
+  color: #ffffff;
+}
+
+window.qb-window popover.menu contents {
+  border-radius: 0;
+  padding: 2px 0;
+  background-color: #f5f4f2;
+  border: 1px solid #c7c2be;
+}
+
+window.qb-window popover.menu modelbutton {
+  border-radius: 0;
+  padding: 3px 16px;
+}
+
+window.qb-window popover.menu modelbutton:hover,
+window.qb-window popover.menu modelbutton:selected {
+  background-image: linear-gradient(to bottom, #f6a179, #f07746);
+  color: #ffffff;
+}
+
+box.qb-toolbar {
+  background-color: #f2f1f0;
+  border-bottom: 1px solid #c7c2be;
+  padding: 1px 4px;
+}
+
+box.qb-toolbar button {
+  padding: 3px;
+  min-width: 24px;
+  min-height: 24px;
+  border-radius: 2px;
+}
+
+box.qb-toolbar separator {
+  margin: 4px 4px;
+}
+
+/* Bildfläche: neutrales Grau wie Eye of GNOME, schwarz im Vollbild */
+stack.qb-stack, scrolledwindow.qb-view, qb-image {
+  background-color: #8a8580;
+}
+
+window.qb-fullscreen stack.qb-stack,
+window.qb-fullscreen scrolledwindow.qb-view,
+window.qb-fullscreen qb-image {
+  background-color: #000000;
+}
+
+box.qb-statusbar {
+  background-color: #f2f1f0;
+  border-top: 1px solid #c7c2be;
+  padding: 2px 8px;
+  font-size: 0.9em;
+  color: #3c3c3c;
+}
+
+window.qb-dialog button {
+  border-radius: 2px;
+  min-width: 80px;
+}

@@ -1,0 +1,23 @@
+[Desktop Entry]
+# Querencia Bilder. Desktop-ID = GApplication-ID org.querencia.Bilder, damit
+# labwc und die Fensterliste das Fenster dieser Datei zuordnen.
+# MimeType ist bewusst NICHT gesetzt: ohne anderen Bildbetrachter würde GIO
+# Querencia Bilder sonst sofort zum Standard für Bilder machen. Die Zuordnung
+# kommt erst nach Freigabe (siehe Bericht QI-01, Integrationsplan).
+Type=Application
+Version=1.5
+Name=Querencia Images
+Name[de]=Querencia Bilder
+GenericName=Image Viewer
+GenericName[de]=Bildbetrachter
+Comment=View images
+Comment[de]=Bilder ansehen
+Exec=querencia-bilder %U
+TryExec=querencia-bilder
+Icon=org.querencia.Bilder
+Terminal=false
+Categories=GTK;Graphics;2DGraphics;RasterGraphics;Viewer;
+Keywords=image;picture;photo;viewer;
+Keywords[de]=Bild;Foto;Betrachter;Bildbetrachter;
+StartupNotify=true
+StartupWMClass=org.querencia.Bilder
