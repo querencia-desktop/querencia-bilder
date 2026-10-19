@@ -1,23 +1,28 @@
 [Desktop Entry]
 # Querencia Bilder. Desktop-ID = GApplication-ID org.querencia.Bilder, damit
 # labwc und die Fensterliste das Fenster dieser Datei zuordnen.
-# MimeType ist bewusst NICHT gesetzt: ohne anderen Bildbetrachter würde GIO
-# Querencia Bilder sonst sofort zum Standard für Bilder machen. Die Zuordnung
-# kommt erst nach Freigabe (siehe Bericht QI-01, Integrationsplan).
+# Vorlage: Name, GenericName, Comment und Keywords sind englisch; die
+# Übersetzungen (Name[de]= …) setzt `werkzeug/i18n.py desktop` aus po/*.po
+# ein (entspricht msgfmt --desktop). Erzeugt: org.querencia.Bilder.desktop.
+# Menüname „Image Viewer“/„Bildbetrachter“ unter Zubehör (Utility statt
+# Graphics, Besitzerentscheidung) und MimeType wie live seit G2-E; der
+# Fenstertitel bleibt „Querencia Bilder“. Querencia Bilder schreibt nie in
+# Bilddateien. Symbole ohne 48x48 (GTK-4.22-Symbolregel).
 Type=Application
 Version=1.5
-Name=Querencia Images
-Name[de]=Querencia Bilder
-GenericName=Image Viewer
+Name[de]=Bildbetrachter
+Name=Image Viewer
 GenericName[de]=Bildbetrachter
-Comment=View images
+GenericName=Image Viewer
 Comment[de]=Bilder ansehen
+Comment=View images
 Exec=querencia-bilder %U
 TryExec=querencia-bilder
 Icon=org.querencia.Bilder
 Terminal=false
-Categories=GTK;Graphics;2DGraphics;RasterGraphics;Viewer;
-Keywords=image;picture;photo;viewer;
+Categories=GTK;Utility;Viewer;
+MimeType=image/png;image/jpeg;image/gif;image/webp;image/bmp;image/svg+xml;
 Keywords[de]=Bild;Foto;Betrachter;Bildbetrachter;
+Keywords=Image;Picture;Photo;Viewer;
 StartupNotify=true
 StartupWMClass=org.querencia.Bilder

@@ -1,6 +1,8 @@
 //! Zoom: „Optimale Größe“ (ins Fenster einpassen, nie vergrößern) oder ein
 //! fester Faktor. Stufen wie Eye of GNOME: 1/4 … 1 … 20, Schritt ×1,25.
 
+use crate::i18n::{self, gettext};
+
 #[derive(Clone, Copy, Debug, PartialEq)]
 pub enum Zoom {
     Fit,
@@ -30,15 +32,17 @@ pub fn zoom_out(current: f64) -> f64 {
     (current / STEP).clamp(MIN, MAX)
 }
 
-/// „100 %“, „12,5 %“ (deutsches Komma).
+/// Zoomstufe für die Statusleiste: „100 %“, „12,5 %“ im Deutschen,
+/// „100%“, „12.5%“ im Englischen (Dezimalzeichen und Form aus dem Katalog).
 pub fn percent(f: f64) -> String {
+    // TRANSLATORS: Zoomstufe in der Statusleiste; {value} ist die Zahl („12.5“)
+    percent_with(f, &i18n::decimal_separator(), &gettext("{value}%"))
+}
+
+fn percent_with(f: f64, sep: &str, template: &str) -> String {
     let p = f * 100.0;
-    let s = if (p - p.round()).abs() < 0.05 {
-        format!("{:.0}", p)
-    } else {
-        format!("{:.1}", p)
-    };
-    format!("{} %", s.replace('.', ","))
+    let digits = if (p - p.round()).abs() < 0.05 { 0 } else { 1 };
+    i18n::fill(template, &[("value", &i18n::decimal(p, digits, sep))])
 }
 
 #[cfg(test)]
@@ -62,9 +66,13 @@ mod tests {
     }
 
     #[test]
-    fn percentages_are_german() {
-        assert_eq!(percent(1.0), "100 %");
-        assert_eq!(percent(0.125), "12,5 %");
-        assert_eq!(percent(0.1), "10 %");
+    fn percentages_follow_the_catalog() {
+        // Deutsch wie bis 0.1.1 (Werte aus de.po)
+        assert_eq!(percent_with(1.0, ",", "{value} %"), "100 %");
+        assert_eq!(percent_with(0.125, ",", "{value} %"), "12,5 %");
+        assert_eq!(percent_with(0.1, ",", "{value} %"), "10 %");
+        // ohne Katalog: Englisch
+        assert_eq!(percent(0.125), "12.5%");
+        assert_eq!(percent(1.0), "100%");
     }
 }

@@ -1,22 +1,41 @@
-//! „Bildinformationen“: Datei, Format, Abmessungen, Größe, Änderungsdatum.
+//! „Image Properties“ („Bildinformationen“): Datei, Format, Abmessungen,
+//! Größe, Änderungsdatum.
 //! Ein gewöhnliches Fenster (labwc-Dekoration), Escape schließt.
 
 use gtk::prelude::*;
 use gtk::{gdk, gio, glib};
 
-/// Dateigröße deutsch: „2,9 kB“, „1,4 MB“ (Basis 1000 wie GNOME).
+use crate::i18n::{self, gettext, gettext_f, ngettext_f};
+
+/// Dateigröße: „2,9 kB“, „1,4 MB“ im Deutschen, „2.9 kB“ im Englischen
+/// (Basis 1000 wie GNOME; Dezimalzeichen aus dem Katalog).
 pub fn human_size(bytes: u64) -> String {
+    size_with(bytes, &i18n::decimal_separator())
+}
+
+fn size_with(bytes: u64, sep: &str) -> String {
     let b = bytes as f64;
-    let s = if b < 1000.0 {
-        format!("{bytes} Bytes")
+    if b < 1000.0 {
+        // b < 1000, passt also in u32
+        ngettext_f("{n} byte", "{n} bytes", bytes as u32, &[])
     } else if b < 1e6 {
-        format!("{:.1} kB", b / 1e3)
+        format!("{} kB", i18n::decimal(b / 1e3, 1, sep))
     } else if b < 1e9 {
-        format!("{:.1} MB", b / 1e6)
+        format!("{} MB", i18n::decimal(b / 1e6, 1, sep))
     } else {
-        format!("{:.1} GB", b / 1e9)
-    };
-    s.replace('.', ",")
+        format!("{} GB", i18n::decimal(b / 1e9, 1, sep))
+    }
+}
+
+/// „800 × 600 pixels“ (Bildinformationen und Statusleiste).
+pub fn dimensions(width: i32, height: i32) -> String {
+    gettext_f(
+        "{width} × {height} pixels",
+        &[
+            ("width", &width.to_string()),
+            ("height", &height.to_string()),
+        ],
+    )
 }
 
 pub struct Facts {
@@ -30,9 +49,9 @@ pub fn facts(file: &gio::File, size: Option<(i32, i32)>, rotation: i32) -> Facts
         .basename()
         .map(|p| p.to_string_lossy().into_owned())
         .unwrap_or_default();
-    rows.push(("Name".into(), name));
+    rows.push((gettext("Name"), name));
     if let Some(dir) = file.parent() {
-        rows.push(("Ordner".into(), dir.parse_name().to_string()));
+        rows.push((gettext("Folder"), dir.parse_name().to_string()));
     }
     let path = file.path();
     if let Some((format, w, h)) = path.as_ref().and_then(gdk_pixbuf::Pixbuf::file_info) {
@@ -41,32 +60,39 @@ pub fn facts(file: &gio::File, size: Option<(i32, i32)>, rotation: i32) -> Facts
             .description()
             .map(|d| d.to_string())
             .unwrap_or_default();
-        rows.push(("Format".into(), format!("{name} ({desc})")));
-        rows.push(("Abmessungen".into(), format!("{w} × {h} Pixel")));
+        rows.push((gettext("Format"), format!("{name} ({desc})")));
+        rows.push((gettext("Dimensions"), dimensions(w, h)));
     } else if let Some((w, h)) = size {
-        rows.push(("Abmessungen".into(), format!("{w} × {h} Pixel")));
+        rows.push((gettext("Dimensions"), dimensions(w, h)));
     }
     if let Ok(info) = file.query_info(
         "standard::size,standard::content-type,time::modified",
         gio::FileQueryInfoFlags::NONE,
         gio::Cancellable::NONE,
     ) {
-        rows.push(("Dateigröße".into(), human_size(info.size().max(0) as u64)));
+        rows.push((gettext("File Size"), human_size(info.size().max(0) as u64)));
         if let Some(t) = info.content_type() {
-            rows.push(("Dateityp".into(), t.to_string()));
+            rows.push((gettext("File Type"), t.to_string()));
         }
         if let Some(s) = info
             .modification_date_time()
             .and_then(|d| d.to_local().ok())
-            .and_then(|dt| dt.format("%d.%m.%Y %H:%M").ok())
+            // TRANSLATORS: Datum und Uhrzeit der letzten Änderung, Format von
+            // g_date_time_format (%d Tag, %m Monat, %Y Jahr, %H:%M Uhrzeit)
+            .and_then(|dt| dt.format(&gettext("%Y-%m-%d %H:%M")).ok())
         {
-            rows.push(("Geändert".into(), s.to_string()));
+            rows.push((gettext("Modified"), s.to_string()));
         }
     }
     if rotation != 0 {
         rows.push((
-            "Anzeige".into(),
-            format!("um {rotation}° gedreht (Datei unverändert)"),
+            // TRANSLATORS: Zeile „Anzeige“ in den Bildinformationen, nur bei
+            // gedrehter Anzeige
+            gettext("Display"),
+            gettext_f(
+                "rotated by {degrees}° (file unchanged)",
+                &[("degrees", &rotation.to_string())],
+            ),
         ));
     }
     Facts { rows }
@@ -95,7 +121,7 @@ fn build_window(parent: &gtk::Window) -> gtk::Window {
     let window = gtk::Window::builder()
         .transient_for(parent)
         .hide_on_close(true)
-        .title("Bildinformationen")
+        .title(gettext("Image Properties"))
         .resizable(false)
         .build();
     window.add_css_class("qb-dialog");
@@ -121,7 +147,9 @@ fn content(window: &gtk::Window, facts: &Facts) -> gtk::Box {
         .build();
     for (i, (k, v)) in facts.rows.iter().enumerate() {
         let key = gtk::Label::new(None);
-        key.set_markup(&format!("<b>{}:</b>", glib::markup_escape_text(k)));
+        // TRANSLATORS: Bezeichnung einer Zeile in den Bildinformationen, fett
+        let k = gettext_f("{label}:", &[("label", k)]);
+        key.set_markup(&format!("<b>{}</b>", glib::markup_escape_text(&k)));
         key.set_xalign(1.0);
         key.set_valign(gtk::Align::Start);
         let val = gtk::Label::new(Some(v));
@@ -132,7 +160,7 @@ fn content(window: &gtk::Window, facts: &Facts) -> gtk::Box {
         grid.attach(&key, 0, i as i32, 1, 1);
         grid.attach(&val, 1, i as i32, 1, 1);
     }
-    let close = gtk::Button::with_mnemonic("_Schließen");
+    let close = gtk::Button::with_mnemonic(&gettext("_Close"));
     let row = gtk::Box::new(gtk::Orientation::Horizontal, 6);
     row.set_halign(gtk::Align::End);
     row.set_margin_top(12);
@@ -159,9 +187,13 @@ mod tests {
     use super::*;
 
     #[test]
-    fn sizes_are_german_with_decimal_comma() {
-        assert_eq!(human_size(19), "19 Bytes");
-        assert_eq!(human_size(2920), "2,9 kB");
-        assert_eq!(human_size(1_478_886), "1,5 MB");
+    fn sizes_use_the_decimal_separator_of_the_catalog() {
+        // Deutsch wie bis 0.1.1 (Komma aus de.po)
+        assert_eq!(size_with(2920, ","), "2,9 kB");
+        assert_eq!(size_with(1_478_886, ","), "1,5 MB");
+        // ohne Katalog: Englisch
+        assert_eq!(human_size(19), "19 bytes");
+        assert_eq!(human_size(1), "1 byte");
+        assert_eq!(human_size(2920), "2.9 kB");
     }
 }

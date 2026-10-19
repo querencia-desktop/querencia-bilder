@@ -1,6 +1,6 @@
 [package]
 name = "querencia-bilder"
-version = "0.1.1"
+version = "0.2.0"
 edition = "2024"
 rust-version = "1.92"
 description = "Querencia Bilder: klassischer Bildbetrachter für Querencia Desktop (Prototyp)"
@@ -13,6 +13,9 @@ publish = false
 # PNG, JPEG, GIF, BMP, WebP, AVIF, …); Querencia Bilder schreibt nie Bilder.
 gtk = { package = "gtk4", version = "0.11", features = ["v4_12"] }
 gdk-pixbuf = "0.22"
+# Übersetzungen über GNU gettext (po/, .mo unter share/locale). Feature
+# gettext-system: das gettext der glibc statt eines mitgebauten libintl.
+gettext-rs = { version = "0.8", features = ["gettext-system"] }
 
 [profile.release]
 lto = true

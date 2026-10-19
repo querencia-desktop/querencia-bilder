@@ -3,12 +3,14 @@
 //! Vorbild ist Eye of GNOME 2.30 (GNOME 2): Menüleiste, kompakte
 //! Werkzeugleiste, Statuszeile, Vollbild und Diashow. GTK 4 ohne libadwaita
 //! und ohne eigene Titelleiste: labwc zeichnet die Server-Titelleiste.
+//! Oberflächentexte englisch über gettext, Deutsch aus `po/de.po` (i18n.rs).
 //!
 //! Querencia Bilder **schreibt nie** in Bilddateien: Drehen wirkt nur auf
 //! die Anzeige, es gibt keine Speicherfunktion.
 
 mod area;
 mod folder;
+mod i18n;
 mod info;
 mod resource;
 mod viewer;
@@ -21,6 +23,7 @@ pub const APP_ID: &str = "org.querencia.Bilder";
 pub const APP_NAME: &str = "Querencia Bilder";
 
 fn main() -> glib::ExitCode {
+    i18n::init();
     let app = gtk::Application::builder()
         .application_id(APP_ID)
         .flags(gio::ApplicationFlags::HANDLES_OPEN)

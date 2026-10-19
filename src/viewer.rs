@@ -1,6 +1,7 @@
 //! Das Betrachterfenster: Menüleiste, Werkzeugleiste, Bildfläche, Statuszeile.
 //!
-//! Menüs wie Eye of GNOME 2.30: Bild | Bearbeiten | Ansicht | Gehe zu | Hilfe.
+//! Menüs wie Eye of GNOME 2.30: Image | Edit | View | Go | Help (deutsch
+//! Bild | Bearbeiten | Ansicht | Gehe zu | Hilfe aus `po/de.po`).
 //! Keine eigene Titelleiste: GTK 4.22 fordert bei labwc die Server-
 //! Dekoration an, es gibt also genau eine (die von labwc).
 //! Bilder werden im Hintergrund dekodiert; die Oberfläche bleibt bedienbar.
@@ -12,6 +13,7 @@ use gtk::prelude::*;
 use gtk::{gdk, gio, glib};
 
 use crate::area::ImageArea;
+use crate::i18n::{gettext, gettext_f, pgettext};
 use crate::zoom::{self, Zoom};
 use crate::{APP_NAME, folder, info, resource};
 
@@ -90,7 +92,7 @@ pub fn install_accels(app: &gtk::Application) {
 }
 
 fn menu_model() -> gio::Menu {
-    fn section(items: &[(&str, &str)]) -> gio::Menu {
+    fn section(items: &[(String, &str)]) -> gio::Menu {
         let m = gio::Menu::new();
         for (label, action) in items {
             m.append(Some(label), Some(action));
@@ -104,53 +106,55 @@ fn menu_model() -> gio::Menu {
         }
         m
     }
+    // Zugriffstasten (_) je Menü eindeutig, in jeder Sprache für sich.
     let bar = gio::Menu::new();
     bar.append_submenu(
-        Some("_Bild"),
+        Some(&gettext("_Image")),
         &submenu(&[
-            section(&[("Ö_ffnen …", "win.open")]),
-            section(&[("Bild_informationen", "win.properties")]),
-            section(&[("S_chließen", "win.close")]),
+            section(&[(gettext("_Open…"), "win.open")]),
+            section(&[(gettext("Prope_rties"), "win.properties")]),
+            // TRANSLATORS: Menü „Bild“; Knöpfe in Dialogen nehmen „_Close“ ohne Kontext
+            section(&[(pgettext("Image menu", "_Close"), "win.close")]),
         ]),
     );
     bar.append_submenu(
-        Some("_Bearbeiten"),
+        Some(&gettext("_Edit")),
         &submenu(&[section(&[
-            ("Im _Uhrzeigersinn drehen", "win.rotate-right"),
-            ("_Gegen den Uhrzeigersinn drehen", "win.rotate-left"),
+            (gettext("_Rotate Clockwise"), "win.rotate-right"),
+            (gettext("Rotate Counterc_lockwise"), "win.rotate-left"),
         ])]),
     );
     bar.append_submenu(
-        Some("_Ansicht"),
+        Some(&gettext("_View")),
         &submenu(&[
             section(&[
-                ("_Werkzeugleiste", "win.toolbar"),
-                ("_Statusleiste", "win.statusbar"),
+                (gettext("_Toolbar"), "win.toolbar"),
+                (gettext("_Statusbar"), "win.statusbar"),
             ]),
             section(&[
-                ("_Vergrößern", "win.zoom-in"),
-                ("Ver_kleinern", "win.zoom-out"),
-                ("_Normale Größe", "win.zoom-normal"),
-                ("_Optimale Größe", "win.zoom-fit"),
+                (gettext("_Zoom In"), "win.zoom-in"),
+                (gettext("Zoom _Out"), "win.zoom-out"),
+                (gettext("_Normal Size"), "win.zoom-normal"),
+                (gettext("_Best Fit"), "win.zoom-fit"),
             ]),
             section(&[
-                ("_Vollbild", "win.fullscreen"),
-                ("_Diashow", "win.slideshow"),
+                (gettext("_Fullscreen"), "win.fullscreen"),
+                (gettext("S_lideshow"), "win.slideshow"),
             ]),
         ]),
     );
     bar.append_submenu(
-        Some("_Gehe zu"),
+        Some(&gettext("_Go")),
         &submenu(&[section(&[
-            ("_Vorheriges Bild", "win.prev"),
-            ("_Nächstes Bild", "win.next"),
-            ("_Erstes Bild", "win.first"),
-            ("_Letztes Bild", "win.last"),
+            (gettext("_Previous Image"), "win.prev"),
+            (gettext("_Next Image"), "win.next"),
+            (gettext("_First Image"), "win.first"),
+            (gettext("_Last Image"), "win.last"),
         ])]),
     );
     bar.append_submenu(
-        Some("_Hilfe"),
-        &submenu(&[section(&[("_Info", "win.about")])]),
+        Some(&gettext("_Help")),
+        &submenu(&[section(&[(gettext("_About"), "win.about")])]),
     );
     bar
 }
@@ -219,39 +223,44 @@ impl Viewer {
 
         let toolbar = gtk::Box::new(gtk::Orientation::Horizontal, 0);
         toolbar.add_css_class("qb-toolbar");
-        let groups: [&[(&str, &str, &str)]; 4] = [
-            &[
-                ("go-previous", "Vorheriges Bild", "win.prev"),
-                ("go-next", "Nächstes Bild", "win.next"),
+        // Kurzhinweise der Werkzeugleiste (Wortlaut wie die Menüeinträge).
+        let groups: [Vec<(&str, String, &str)>; 4] = [
+            vec![
+                ("go-previous", gettext("Previous Image"), "win.prev"),
+                ("go-next", gettext("Next Image"), "win.next"),
             ],
-            &[
-                ("zoom-in", "Vergrößern", "win.zoom-in"),
-                ("zoom-out", "Verkleinern", "win.zoom-out"),
-                ("zoom-original", "Normale Größe", "win.zoom-normal"),
-                ("zoom-fit-best", "Optimale Größe", "win.zoom-fit"),
+            vec![
+                ("zoom-in", gettext("Zoom In"), "win.zoom-in"),
+                ("zoom-out", gettext("Zoom Out"), "win.zoom-out"),
+                ("zoom-original", gettext("Normal Size"), "win.zoom-normal"),
+                ("zoom-fit-best", gettext("Best Fit"), "win.zoom-fit"),
             ],
-            &[
+            vec![
                 (
                     "object-rotate-left",
-                    "Gegen den Uhrzeigersinn drehen",
+                    gettext("Rotate Counterclockwise"),
                     "win.rotate-left",
                 ),
                 (
                     "object-rotate-right",
-                    "Im Uhrzeigersinn drehen",
+                    gettext("Rotate Clockwise"),
                     "win.rotate-right",
                 ),
             ],
-            &[
-                ("view-fullscreen", "Vollbild", "win.fullscreen"),
-                ("x-office-presentation", "Diashow", "win.slideshow"),
+            vec![
+                ("view-fullscreen", gettext("Fullscreen"), "win.fullscreen"),
+                (
+                    "x-office-presentation",
+                    gettext("Slideshow"),
+                    "win.slideshow",
+                ),
             ],
         ];
         for (i, group) in groups.iter().enumerate() {
             if i > 0 {
                 toolbar.append(&gtk::Separator::new(gtk::Orientation::Vertical));
             }
-            for (icon, tip, action) in group.iter() {
+            for (icon, tip, action) in group {
                 toolbar.append(&tool_button(icon, tip, action));
             }
         }
@@ -273,7 +282,8 @@ impl Viewer {
         warn.set_pixel_size(48);
         message_box.append(&warn);
         message_box.append(&message);
-        let empty = gtk::Label::new(Some("Kein Bild geöffnet.\n\nBild → Öffnen … (Strg+O)"));
+        // TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
+        let empty = gtk::Label::new(Some(&gettext("No image loaded.\n\nImage → Open… (Ctrl+O)")));
         empty.set_justify(gtk::Justification::Center);
         empty.add_css_class("dim-label");
         let stack = gtk::Stack::new();
@@ -439,7 +449,7 @@ impl Viewer {
         self.generation.set(generation);
         let name = display_name(&file);
         self.window.set_title(Some(&format!("{name} – {APP_NAME}")));
-        self.status_size.set_text("Wird geladen …");
+        self.status_size.set_text(&gettext("Loading…"));
         self.update_index_label();
 
         let path = file.path();
@@ -451,8 +461,8 @@ impl Viewer {
             let decoded = match path {
                 Some(p) => gio::spawn_blocking(move || decode(&p))
                     .await
-                    .unwrap_or_else(|_| Err("Ladevorgang abgebrochen".to_string())),
-                None => Err("Nur lokale Dateien werden unterstützt.".to_string()),
+                    .unwrap_or_else(|_| Err(gettext("Loading cancelled"))),
+                None => Err(gettext("Only local files are supported.")),
             };
             let result = decoded.and_then(|d| d.into_pixbuf());
             // Diagnose ohne Bildinhalte: Name, Dauer, Ergebnis.
@@ -479,9 +489,10 @@ impl Viewer {
                 }
                 Err(err) => {
                     v.area.set_texture(None);
+                    let title = gettext_f("Could not load image “{name}”.", &[("name", &name)]);
                     v.message.set_markup(&format!(
-                        "<b>Das Bild „{}“ konnte nicht geladen werden.</b>\n\n{}",
-                        glib::markup_escape_text(&name),
+                        "<b>{}</b>\n\n{}",
+                        glib::markup_escape_text(&title),
                         glib::markup_escape_text(&err)
                     ));
                     v.stack.set_visible_child_name("fehler");
@@ -512,7 +523,14 @@ impl Viewer {
         self.status_index.set_text(&if n == 0 {
             String::new()
         } else {
-            format!("Bild {} von {n}", self.index.get() + 1)
+            // TRANSLATORS: Statusleiste, Position in der Bildliste
+            gettext_f(
+                "Image {index} of {count}",
+                &[
+                    ("index", &(self.index.get() + 1).to_string()),
+                    ("count", &n.to_string()),
+                ],
+            )
         });
     }
 
@@ -523,7 +541,8 @@ impl Viewer {
                 self.status_size.set_text("");
                 self.stack.set_visible_child_name("leer");
             } else if self.stack.visible_child_name().as_deref() == Some("fehler") {
-                self.status_size.set_text("Nicht lesbar");
+                // TRANSLATORS: Statusleiste, Bild konnte nicht geladen werden
+                self.status_size.set_text(&gettext("Not readable"));
             }
             return;
         };
@@ -539,16 +558,16 @@ impl Viewer {
             })
             .map(|i| info::human_size(i.size().max(0) as u64))
             .unwrap_or_default();
-        let rot = if self.rotation.get().rem_euclid(360) != 0 {
-            "   gedreht (nicht gespeichert)"
-        } else {
-            ""
-        };
-        self.status_size.set_text(&format!(
-            "{} × {} Pixel   {size}{rot}",
-            pb.width(),
-            pb.height()
-        ));
+        let dims = info::dimensions(pb.width(), pb.height());
+        let args = [("dimensions", dims.as_str()), ("size", size.as_str())];
+        self.status_size
+            .set_text(&if self.rotation.get().rem_euclid(360) != 0 {
+                // TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
+                gettext_f("{dimensions}   {size}   rotated (not saved)", &args)
+            } else {
+                // TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
+                gettext_f("{dimensions}   {size}", &args)
+            });
     }
 
     fn apply_zoom(&self, z: Zoom) {
@@ -623,12 +642,12 @@ impl Viewer {
             "open",
             Box::new(|v| {
                 let filter = gtk::FileFilter::new();
-                filter.set_name(Some("Bilder"));
+                filter.set_name(Some(&gettext("Images")));
                 filter.add_pixbuf_formats();
                 let filters = gio::ListStore::new::<gtk::FileFilter>();
                 filters.append(&filter);
                 let dialog = gtk::FileDialog::builder()
-                    .title("Bild öffnen")
+                    .title(gettext("Open Image"))
                     .modal(true)
                     .filters(&filters)
                     .build();
@@ -861,7 +880,7 @@ thread_local! {
     static ABOUT: RefCell<Option<gtk::Window>> = const { RefCell::new(None) };
 }
 
-/// „Info“: wird einmal angelegt und nur verborgen (siehe info::show);
+/// „About“ („Info“): wird einmal angelegt und nur verborgen (siehe info::show);
 /// Escape schließt wie der Knopf.
 fn about(parent: &gtk::ApplicationWindow) {
     if let Some(w) = ABOUT.with(|a| a.borrow().clone()) {
@@ -872,7 +891,7 @@ fn about(parent: &gtk::ApplicationWindow) {
         .transient_for(parent)
         .modal(true)
         .hide_on_close(true)
-        .title(format!("Info zu {APP_NAME}"))
+        .title(gettext_f("About {name}", &[("name", APP_NAME)]))
         .resizable(false)
         .build();
     window.add_css_class("qb-dialog");
@@ -890,14 +909,14 @@ fn about(parent: &gtk::ApplicationWindow) {
         "<b><big>{APP_NAME} {}</big></b>",
         env!("CARGO_PKG_VERSION")
     ));
-    let text = gtk::Label::new(Some(
-        "Klassischer Bildbetrachter für Querencia Desktop\nnach dem Vorbild von Eye of GNOME 2.30.\n\n\
-         Bilder werden nur angezeigt, nie verändert.\nPrototyp – nicht für den Alltag freigegeben.",
-    ));
+    let text = gtk::Label::new(Some(&gettext(
+        "Classic image viewer for Querencia Desktop\nmodelled on Eye of GNOME 2.30.\n\n\
+         Images are only displayed, never changed.\nPrototype – not released for everyday use.",
+    )));
     text.set_justify(gtk::Justification::Center);
-    let lic = gtk::Label::new(Some("Lizenz: GNU GPL, Version 3 oder neuer"));
+    let lic = gtk::Label::new(Some(&gettext("License: GNU GPL, version 3 or later")));
     lic.add_css_class("dim-label");
-    let close = gtk::Button::with_mnemonic("_Schließen");
+    let close = gtk::Button::with_mnemonic(&gettext("_Close"));
     close.set_halign(gtk::Align::End);
     close.set_margin_top(12);
     for w in [
