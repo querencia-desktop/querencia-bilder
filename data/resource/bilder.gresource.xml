@@ -1,0 +1,10 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Eingebettete Ressourcen von Querencia Bilder. Neu erzeugen (aus dem Repo-Wurzelverzeichnis):
+     glib-compile-resources --sourcedir=data/icons/hicolor/scalable/apps \
+       --target=data/resource/bilder.gresource data/resource/bilder.gresource.xml
+     Der Unit-Test resource::tests prüft, dass die Ressource zum SVG passt. -->
+<gresources>
+  <gresource prefix="/org/querencia/Bilder">
+    <file alias="icons/scalable/apps/org.querencia.Bilder-info.svg">org.querencia.Bilder.svg</file>
+  </gresource>
+</gresources>

@@ -13,7 +13,7 @@ use gtk::{gdk, gio, glib};
 
 use crate::area::ImageArea;
 use crate::zoom::{self, Zoom};
-use crate::{APP_NAME, folder, info};
+use crate::{APP_NAME, folder, info, resource};
 
 const CSS: &str = include_str!("style.css");
 /// Anzeigedauer je Bild in der Diashow.
@@ -59,7 +59,13 @@ pub fn install_accels(app: &gtk::Application) {
         ("win.rotate-left", &["<Shift><Control>r"]),
         (
             "win.zoom-in",
-            &["<Control>plus", "<Control>KP_Add", "plus", "KP_Add"],
+            &[
+                "<Control>plus",
+                "<Control>equal",
+                "<Control>KP_Add",
+                "plus",
+                "KP_Add",
+            ],
         ),
         (
             "win.zoom-out",
@@ -851,13 +857,12 @@ fn texture_of(pb: &gdk_pixbuf::Pixbuf) -> gdk::Texture {
     .upcast()
 }
 
-const ICON_64: &[u8] = include_bytes!("../data/icons/hicolor/64x64/apps/org.querencia.Bilder.png");
-
 thread_local! {
     static ABOUT: RefCell<Option<gtk::Window>> = const { RefCell::new(None) };
 }
 
-/// „Info“: wird einmal angelegt und nur verborgen (siehe info::show).
+/// „Info“: wird einmal angelegt und nur verborgen (siehe info::show);
+/// Escape schließt wie der Knopf.
 fn about(parent: &gtk::ApplicationWindow) {
     if let Some(w) = ABOUT.with(|a| a.borrow().clone()) {
         w.present();
@@ -876,11 +881,10 @@ fn about(parent: &gtk::ApplicationWindow) {
     body.set_margin_bottom(12);
     body.set_margin_start(24);
     body.set_margin_end(24);
-    if let Ok(t) = gdk::Texture::from_bytes(&glib::Bytes::from_static(ICON_64)) {
-        let img = gtk::Image::from_paintable(Some(&t));
-        img.set_pixel_size(64);
-        body.append(&img);
-    }
+    // Programmsymbol als SVG aus der eingebetteten Ressource (resource.rs).
+    let img = gtk::Image::from_icon_name(resource::INFO_ICON);
+    img.set_pixel_size(64);
+    body.append(&img);
     let name = gtk::Label::new(None);
     name.set_markup(&format!(
         "<b><big>{APP_NAME} {}</big></b>",
@@ -912,6 +916,18 @@ fn about(parent: &gtk::ApplicationWindow) {
             w.close();
         }
     });
+    let keys = gtk::EventControllerKey::new();
+    let w = window.downgrade();
+    keys.connect_key_pressed(move |_, key, _, _| {
+        if key == gdk::Key::Escape {
+            if let Some(w) = w.upgrade() {
+                w.close();
+            }
+            return glib::Propagation::Stop;
+        }
+        glib::Propagation::Proceed
+    });
+    window.add_controller(keys);
     ABOUT.with(|a| *a.borrow_mut() = Some(window.clone()));
     window.present();
 }

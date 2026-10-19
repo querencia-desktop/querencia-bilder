@@ -10,6 +10,7 @@
 mod area;
 mod folder;
 mod info;
+mod resource;
 mod viewer;
 mod zoom;
 
@@ -27,6 +28,7 @@ fn main() -> glib::ExitCode {
     app.connect_startup(|app| {
         gtk::Window::set_default_icon_name(APP_ID);
         viewer::use_classic_icon_theme();
+        resource::register();
         viewer::load_css();
         viewer::install_accels(app);
     });
