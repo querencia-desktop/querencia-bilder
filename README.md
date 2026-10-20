@@ -1,4 +1,4 @@
-# Querencia Bilder 0.2.0
+# Querencia Bilder
 
 Klassischer Bildbetrachter für Querencia Desktop nach dem Vorbild von
 Eye of GNOME 2.30: Menüleiste (Bild | Bearbeiten | Ansicht | Gehe zu |
@@ -6,11 +6,21 @@ Hilfe), kompakte Werkzeugleiste, Statuszeile, Vollbild, Diashow.
 Rust + GTK 4, Dekodierung über das System-gdk-pixbuf (Ubuntu 26.04: glycin).
 Oberfläche englisch und deutsch über GNU gettext (`po/`).
 
-> **Status:** 0.1.1 läuft seit 20.10.2026 in der Sitzung (Starter
-> `org.querencia.Bilder.desktop`); 0.2.0 (gettext, Englisch/Deutsch) ist
-> gebaut und wird über die Status-Session freigegeben.
-> Querencia Bilder **schreibt nie** in Bilddateien: Drehen wirkt nur auf
-> die Anzeige, es gibt keine Speicherfunktion.
+> **Alpha.** Querencia Bilder **schreibt nie** in Bilddateien: Drehen wirkt
+> nur auf die Anzeige, es gibt keine Speicherfunktion.
+
+## Stand
+
+| | |
+|---|---|
+| Version | 0.2.1 (Tag `bilder/0.2.1`; ändert gegenüber 0.2.0 nur die Auswahlfarbe der Schrift) |
+| Auf der Entwicklungs-VM | 0.2.1 live seit 20.10.2026; 0.2.2 (Menü „Grafik“ statt „Zubehör“, Tag `bilder/0.2.2`, Zweig `v0.2.2`) geprüft und freigegeben, noch nicht aktiviert |
+| Letzte Prüfung | 0.2.0: 13/13 Unit-Tests, `i18n.py pruefen` PASS, GUI Deutsch/Englisch × 1024×768/1920×1080 je 35/35 (isoliert) |
+| Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22 |
+
+Änderungen je Version: [CHANGELOG.md](CHANGELOG.md).
+
+## Zweck
 
 | | |
 |---|---|
@@ -21,37 +31,10 @@ Oberfläche englisch und deutsch über GNU gettext (`po/`).
 | Formate | PNG, JPEG, GIF (erstes Bild), BMP, WebP, außerdem alles, was gdk-pixbuf lädt (AVIF, TIFF, …) |
 | Tasten | ←/→, Bild↑/↓, Leertaste/Rücktaste: blättern; Pos1/Ende; +/−, Ziffernblock +/−, Strg+Plus/Strg+=/Strg+Minus (zoomen), 1 oder Strg+0 (100 %), F (einpassen); Strg+R / Umschalt+Strg+R drehen; F11 Vollbild; F5 Diashow; Esc beendet Vollbild/Diashow; Alt+Eingabe Bildinformationen (Escape schließt); Strg+O; Strg+W und Strg+Q schließen |
 
-## Bauen und testen
+## Bauen und Prüfen
 
-```bash
-cargo build --release --locked
-cargo test --locked                       # Unit-Tests (Ordnerliste, Zoom, Größen, Ressource, Katalog)
-cargo clippy --all-targets --locked -- -D warnings
-```
-
-Übersetzungen (ohne Abhängigkeiten; GNU gettext ≥ 0.23 zum Gegenprüfen):
-
-```bash
-python3 werkzeug/i18n.py pot        # po/querencia-bilder.pot aus src/ und data/*.desktop.in
-python3 werkzeug/i18n.py update     # po/de.po nachziehen, dann übersetzen
-python3 werkzeug/i18n.py desktop data/org.querencia.Bilder.desktop.in data/org.querencia.Bilder.desktop
-python3 werkzeug/i18n.py pruefen    # muss PASS melden
-python3 werkzeug/i18n.py mo <ziel>  # <ziel>/de/LC_MESSAGES/querencia-bilder.mo
-msgfmt -c -o /dev/null po/de.po     # Gegenprobe mit GNU gettext
-```
-
-Ein Paket legt die `.mo` nach `/usr/share/locale/<lang>/LC_MESSAGES/`; Deutsch
-hängt an diesem Katalog (ohne ihn zeigt Bilder Englisch).
-
-Die Ressource mit dem Symbol des Info-Fensters wird nach einer Änderung am
-SVG neu erzeugt (Befehl in `data/resource/bilder.gresource.xml`); der
-Unit-Test `resource::tests` schlägt fehl, solange sie veraltet ist.
-
-GUI-Prüfung nur isoliert (headless labwc, eigener D-Bus, virtuelle Eingabe):
-`../werkzeug/` (QI-01, Bericht ) bzw.
-`~/projects/querencia-bilder-011/werkzeug/` (0.1.1, Bericht
-) und `~/projects/querencia-bilder-020/werkzeug/`
-(0.2.0 je Sprache, Bericht ).
+`cargo build --release --locked`, danach `cargo fmt --all --check`, `cargo clippy --all-targets --locked -- -D warnings`, `cargo test --locked` und `python3 werkzeug/i18n.py pruefen`.
+Übersetzungen, Ressource und die isolierte GUI-Prüfung: [docs/building.md](docs/building.md), [docs/testing.md](docs/testing.md).
 
 ## Bekannte Grenzen
 
@@ -67,7 +50,8 @@ GUI-Prüfung nur isoliert (headless labwc, eigener D-Bus, virtuelle Eingabe):
 ## Lizenz
 
 Programm: GPL-3.0-or-later (GNU General Public License, Version 3 oder neuer),
-siehe [LICENSE](LICENSE). Copyright 2026 Querencia Desktop contributors.
+siehe [LICENSE](LICENSE) (reiner Lizenztext). Copyright 2026 Querencia Desktop
+contributors; Urheberhinweis in [COPYRIGHT](COPYRIGHT).
 Kein Code aus Eye of MATE/Eye of GNOME/Ristretto; die Rust-Abhängigkeiten
 (gtk-rs) stehen unter MIT.
 
