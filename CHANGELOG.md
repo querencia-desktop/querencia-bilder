@@ -1,5 +1,12 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.2] – 2026-10-20
+- Menü: Bilder steht unter „Grafik“ statt unter „Zubehör“
+  (`Categories=GTK;Graphics;Viewer;` statt `GTK;Utility;Viewer;`). Die
+  Pflichtprobe auf einer frischen VM (B3) zeigte, dass das Menü „Grafik“
+  sonst ganz fehlt. Entspricht den Kategorien der MetaInfo (Graphics,
+  Viewer). Programm, Texte und Katalog unverändert.
+
 ## [0.2.1] – 2026-10-20, CSS-Welle
 - Auswahlschrift dunkel (`#1a1a1a` statt `#ffffff`) auf dem orangen Verlauf
   der Menüleiste und der Menüeinträge, passend zum GTK-Thema

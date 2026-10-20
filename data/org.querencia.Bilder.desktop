@@ -4,8 +4,8 @@
 # Vorlage: Name, GenericName, Comment und Keywords sind englisch; die
 # Übersetzungen (Name[de]= …) setzt `werkzeug/i18n.py desktop` aus po/*.po
 # ein (entspricht msgfmt --desktop). Erzeugt: org.querencia.Bilder.desktop.
-# Menüname „Image Viewer“/„Bildbetrachter“ unter Zubehör (Utility statt
-# Graphics, Besitzerentscheidung) und MimeType wie live seit G2-E; der
+# Menüname „Image Viewer“/„Bildbetrachter“ unter Grafik (Graphics ab 0.2.2,
+# Pflichtprobe B3; bis 0.2.1 Utility) und MimeType wie live seit G2-E; der
 # Fenstertitel bleibt „Querencia Bilder“. Querencia Bilder schreibt nie in
 # Bilddateien. Symbole ohne 48x48 (GTK-4.22-Symbolregel).
 Type=Application
@@ -20,7 +20,7 @@ Exec=querencia-bilder %U
 TryExec=querencia-bilder
 Icon=org.querencia.Bilder
 Terminal=false
-Categories=GTK;Utility;Viewer;
+Categories=GTK;Graphics;Viewer;
 MimeType=image/png;image/jpeg;image/gif;image/webp;image/bmp;image/svg+xml;
 Keywords[de]=Bild;Foto;Betrachter;Bildbetrachter;
 Keywords=Image;Picture;Photo;Viewer;
