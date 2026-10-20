@@ -1,5 +1,23 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.3] – 2026-10-20
+- „Bildinformationen“ und „Info“ haben bei jedem Öffnen eine Titelleiste
+  (QD-076, Werkstatt QREL-06 A2.4): Beide Fenster werden beim Schließen
+  zerstört und beim Öffnen neu gebaut, statt verborgen und wieder gezeigt zu
+  werden. labwc 0.9.8 verknüpft die Dekorationsanfrage (KDE-Protokoll) nur
+  mit dem ersten xdg_toplevel einer Fläche; GTK 4.22 legt beim Wiederzeigen
+  ein neues an und fragt nicht erneut. Ein offenes Fenster wird weiter
+  wiederverwendet (Alt+Eingabe zeigt dann die Angaben zum aktuellen Bild).
+- Die beiden Fenster gehören jetzt zur Anwendung (App-ID
+  `org.querencia.Bilder`, Muster Querencia Editor), werden mit dem
+  Hauptfenster geschlossen und schließen sich im nächsten Leerlauf.
+- „Bildinformationen“ ohne GTK-Warnung („Trying to measure GtkWindow …
+  for height of …, but it needs at least …“, bei jedem Öffnen, auch in
+  Werkstatt A2.4 gemeldet): Nur Werte über 50 Zeichen (Ordnerpfad) brechen
+  um, und dann mit fester Breite von 50 Zeichen; kürzere stehen wie bisher
+  in einer Zeile.
+- Programm sonst, Texte und Katalog unverändert.
+
 ## [0.2.2] – 2026-10-20
 - Menü: Bilder steht unter „Grafik“ statt unter „Zubehör“
   (`Categories=GTK;Graphics;Viewer;` statt `GTK;Utility;Viewer;`). Die

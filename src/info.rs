@@ -98,39 +98,52 @@ pub fn facts(file: &gio::File, size: Option<(i32, i32)>, rotation: i32) -> Facts
     Facts { rows }
 }
 
+/// Werte bis zu dieser Länge stehen in einer Zeile, längere brechen hier um.
+const WRAP_CHARS: usize = 50;
+
 thread_local! {
-    /// Das (einzige) Fenster „Bildinformationen“, wird wiederverwendet.
-    static WINDOW: std::cell::RefCell<Option<gtk::Window>> = const { std::cell::RefCell::new(None) };
+    /// Das offene Fenster „Bildinformationen“ (höchstens eines). Nur schwach
+    /// gehalten: Nach dem Schließen gibt GTK es frei, der Platz ist dann leer.
+    static WINDOW: glib::WeakRef<gtk::Window> = glib::WeakRef::new();
 }
 
-/// Zeigt die Bildinformationen. Das Fenster wird einmal angelegt und beim
-/// Schließen nur verborgen (wie in Eye of GNOME): GTK 4.22.4 stürzt sonst
-/// beim Zerstören eines Fensters ab, das aus einem Tastenkürzel heraus
-/// geöffnet wurde (Alt+Eingabe; SIGSEGV in libwayland-client, QI-01).
+/// Zeigt die Bildinformationen. Ist das Fenster offen, bekommt es nur den
+/// neuen Inhalt; sonst wird es neu gebaut. Beim Schließen wird es zerstört,
+/// nicht verborgen: Ein verborgenes und wieder gezeigtes GTK-4.22-Fenster hat
+/// in labwc 0.9.8 keine Titelleiste mehr (QD-076, Werkstatt QREL-06 A2.4).
 pub fn show(parent: &impl IsA<gtk::Window>, facts: &Facts) {
     let window = WINDOW.with(|slot| {
-        slot.borrow_mut()
-            .get_or_insert_with(|| build_window(parent.upcast_ref()))
-            .clone()
+        slot.upgrade().unwrap_or_else(|| {
+            let w = dialog_window(parent.upcast_ref(), &gettext("Image Properties"));
+            slot.set(Some(&w));
+            w
+        })
     });
     window.set_child(Some(&content(&window, facts)));
     window.present();
 }
 
-fn build_window(parent: &gtk::Window) -> gtk::Window {
+/// Ein Nebenfenster von Bilder: gehört zur Anwendung wie das Hauptfenster
+/// (App-ID `org.querencia.Bilder` statt des Programmnamens, Muster Querencia
+/// Editor), wird mit dem Hauptfenster zerstört und schließt sich erst im
+/// nächsten Leerlauf, nicht aus dem laufenden Tasten- oder Klick-Handler.
+pub fn dialog_window(parent: &gtk::Window, title: &str) -> gtk::Window {
     let window = gtk::Window::builder()
         .transient_for(parent)
-        .hide_on_close(true)
-        .title(gettext("Image Properties"))
+        .destroy_with_parent(true)
+        .title(title)
         .resizable(false)
         .build();
+    if let Some(app) = parent.application() {
+        window.set_application(Some(&app));
+    }
     window.add_css_class("qb-dialog");
     let keys = gtk::EventControllerKey::new();
     let w = window.downgrade();
     keys.connect_key_pressed(move |_, key, _, _| {
         if key == gdk::Key::Escape {
             if let Some(w) = w.upgrade() {
-                w.close();
+                close_later(&w);
             }
             return glib::Propagation::Stop;
         }
@@ -138,6 +151,12 @@ fn build_window(parent: &gtk::Window) -> gtk::Window {
     });
     window.add_controller(keys);
     window
+}
+
+/// Schließt (und zerstört) `window` im nächsten Leerlauf.
+pub fn close_later(window: &gtk::Window) {
+    let window = window.clone();
+    glib::idle_add_local_once(move || window.close());
 }
 
 fn content(window: &gtk::Window, facts: &Facts) -> gtk::Box {
@@ -155,8 +174,15 @@ fn content(window: &gtk::Window, facts: &Facts) -> gtk::Box {
         let val = gtk::Label::new(Some(v));
         val.set_xalign(0.0);
         val.set_selectable(true);
-        val.set_wrap(true);
-        val.set_max_width_chars(50);
+        // Nur lange Werte (Ordnerpfad) brechen um, dann mit fester Breite:
+        // Ein umbrechendes Label ohne Mindestbreite lässt GTK 4.22 das nicht
+        // größenveränderbare Fenster zu niedrig bemessen („Trying to measure
+        // GtkWindow … for height of …, but it needs at least …“).
+        if v.chars().count() > WRAP_CHARS {
+            val.set_wrap(true);
+            val.set_width_chars(WRAP_CHARS as i32);
+            val.set_max_width_chars(WRAP_CHARS as i32);
+        }
         grid.attach(&key, 0, i as i32, 1, 1);
         grid.attach(&val, 1, i as i32, 1, 1);
     }
@@ -176,7 +202,7 @@ fn content(window: &gtk::Window, facts: &Facts) -> gtk::Box {
     let w = window.downgrade();
     close.connect_clicked(move |_| {
         if let Some(w) = w.upgrade() {
-            w.close();
+            close_later(&w);
         }
     });
     outer

@@ -877,24 +877,23 @@ fn texture_of(pb: &gdk_pixbuf::Pixbuf) -> gdk::Texture {
 }
 
 thread_local! {
-    static ABOUT: RefCell<Option<gtk::Window>> = const { RefCell::new(None) };
+    /// Das offene Fenster „Info“ (höchstens eines), schwach gehalten wie in
+    /// info::show.
+    static ABOUT: glib::WeakRef<gtk::Window> = glib::WeakRef::new();
 }
 
-/// „About“ („Info“): wird einmal angelegt und nur verborgen (siehe info::show);
-/// Escape schließt wie der Knopf.
+/// „About“ („Info“): wird bei jedem Öffnen neu gebaut und beim Schließen
+/// zerstört (QD-076, siehe info::show); Escape schließt wie der Knopf.
 fn about(parent: &gtk::ApplicationWindow) {
-    if let Some(w) = ABOUT.with(|a| a.borrow().clone()) {
+    if let Some(w) = ABOUT.with(|a| a.upgrade()) {
         w.present();
         return;
     }
-    let window = gtk::Window::builder()
-        .transient_for(parent)
-        .modal(true)
-        .hide_on_close(true)
-        .title(gettext_f("About {name}", &[("name", APP_NAME)]))
-        .resizable(false)
-        .build();
-    window.add_css_class("qb-dialog");
+    let window = info::dialog_window(
+        parent.upcast_ref(),
+        &gettext_f("About {name}", &[("name", APP_NAME)]),
+    );
+    window.set_modal(true);
     let body = gtk::Box::new(gtk::Orientation::Vertical, 8);
     body.set_margin_top(18);
     body.set_margin_bottom(12);
@@ -932,21 +931,9 @@ fn about(parent: &gtk::ApplicationWindow) {
     let w = window.downgrade();
     close.connect_clicked(move |_| {
         if let Some(w) = w.upgrade() {
-            w.close();
+            info::close_later(&w);
         }
     });
-    let keys = gtk::EventControllerKey::new();
-    let w = window.downgrade();
-    keys.connect_key_pressed(move |_, key, _, _| {
-        if key == gdk::Key::Escape {
-            if let Some(w) = w.upgrade() {
-                w.close();
-            }
-            return glib::Propagation::Stop;
-        }
-        glib::Propagation::Proceed
-    });
-    window.add_controller(keys);
-    ABOUT.with(|a| *a.borrow_mut() = Some(window.clone()));
+    ABOUT.with(|a| a.set(Some(&window)));
     window.present();
 }
