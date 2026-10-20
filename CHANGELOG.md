@@ -1,5 +1,13 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.4] – 2026-10-20
+- Dunkles Thema auch nach dem Start (QD-081): GTK 4.22 lädt bei
+  `color-scheme prefer-dark` das dunkle CSS nur bei einem Wechsel im
+  laufenden Programm; Bilder meldet `gtk-interface-color-scheme` einmal beim
+  Start, damit es nachgeladen wird. Mit hellem Thema ändert sich nichts
+  (das dunkle Thema kommt erst mit Thema 0.2).
+- Sonst wie 0.2.3; Texte und Katalog unverändert.
+
 ## [0.2.3] – 2026-10-20
 - „Bildinformationen“ und „Info“ haben bei jedem Öffnen eine Titelleiste
   (QD-076, Werkstatt QREL-06 A2.4): Beide Fenster werden beim Schließen
