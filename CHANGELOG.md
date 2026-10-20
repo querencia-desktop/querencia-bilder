@@ -1,5 +1,13 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.1] – 2026-10-20, CSS-Welle
+- Auswahlschrift dunkel (`#1a1a1a` statt `#ffffff`) auf dem orangen Verlauf
+  der Menüleiste und der Menüeinträge, passend zum GTK-Thema
+  Querencia-Klassisch (Entscheidung 20.10.: dunkle Auswahlschrift). Kontrast
+  6,2:1 (unten, `#f07746`) bis 8,5:1 (oben, `#f6a179`), mit Weiß waren es
+  2,8:1 bzw. 2,0:1. Verlauf und alles Übrige unverändert; Texte und Katalog
+  unverändert.
+
 ## [0.2.0] – 2026-10-20, unveröffentlicht
 - Mehrsprachig über GNU gettext (Textdomäne `querencia-bilder`, Crate
   `gettext-rs` mit `gettext-system`), Muster Editor 0.2.0 (G2-AC,

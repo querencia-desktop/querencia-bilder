@@ -15,7 +15,7 @@ window.qb-window menubar > item {
 window.qb-window menubar > item:hover,
 window.qb-window menubar > item:selected {
   background-image: linear-gradient(to bottom, #f6a179, #f07746);
-  color: #ffffff;
+  color: #1a1a1a;
 }
 
 window.qb-window popover.menu contents {
@@ -33,7 +33,7 @@ window.qb-window popover.menu modelbutton {
 window.qb-window popover.menu modelbutton:hover,
 window.qb-window popover.menu modelbutton:selected {
   background-image: linear-gradient(to bottom, #f6a179, #f07746);
-  color: #ffffff;
+  color: #1a1a1a;
 }
 
 box.qb-toolbar {
