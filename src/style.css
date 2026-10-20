@@ -1,15 +1,16 @@
 /* Querencia Bilder – klassische Optik (Ambiance-Farbwerte wie Panel und
-   Querencia Files; keine fremden Bilder oder Theme-Dateien übernommen). */
+   Querencia Files; keine fremden Bilder oder Theme-Dateien übernommen).
+   Grund, Schrift und Ränder von Menüleiste, Menüs, Werkzeug- und
+   Statusleiste kommen seit 0.2.4 aus dem Thema, das sie für hell und
+   dunkel setzt (QD-081); die Ränder der eigenen Leisten nehmen die
+   Themenfarbe @borders, die dem Farbschema ohne eigene Bindung folgt. */
 
 window.qb-window menubar {
-  background-color: #f2f1f0;
-  border-bottom: 1px solid #c7c2be;
   padding: 1px 2px;
 }
 
 window.qb-window menubar > item {
   padding: 3px 8px;
-  color: #3c3c3c;
 }
 
 window.qb-window menubar > item:hover,
@@ -21,8 +22,6 @@ window.qb-window menubar > item:selected {
 window.qb-window popover.menu contents {
   border-radius: 0;
   padding: 2px 0;
-  background-color: #f5f4f2;
-  border: 1px solid #c7c2be;
 }
 
 window.qb-window popover.menu modelbutton {
@@ -37,8 +36,7 @@ window.qb-window popover.menu modelbutton:selected {
 }
 
 box.qb-toolbar {
-  background-color: #f2f1f0;
-  border-bottom: 1px solid #c7c2be;
+  border-bottom: 1px solid @borders;
   padding: 1px 4px;
 }
 
@@ -65,11 +63,9 @@ window.qb-fullscreen qb-image {
 }
 
 box.qb-statusbar {
-  background-color: #f2f1f0;
-  border-top: 1px solid #c7c2be;
+  border-top: 1px solid @borders;
   padding: 2px 8px;
   font-size: 0.9em;
-  color: #3c3c3c;
 }
 
 window.qb-dialog button {
