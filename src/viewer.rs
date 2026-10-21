@@ -937,3 +937,18 @@ fn about(parent: &gtk::ApplicationWindow) {
     ABOUT.with(|a| a.set(Some(&window)));
     window.present();
 }
+
+#[cfg(test)]
+mod tests {
+    use super::CSS;
+
+    #[test]
+    fn css_repeats_no_light_theme_colors() {
+        // QD-081: Grund, Schrift und Ränder kommen aus dem Thema, damit
+        // „Dunkle Darstellung bevorzugen“ die Leisten und Menüs mitnimmt.
+        for farbe in ["#f2f1f0", "#f5f4f2", "#c7c2be", "#3c3c3c"] {
+            assert!(!CSS.contains(farbe), "feste Hellfarbe {farbe} in style.css");
+        }
+        assert_eq!(CSS.matches("solid @borders;").count(), 2);
+    }
+}
