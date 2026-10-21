@@ -1,8 +1,8 @@
 # Änderungen – Querencia Bilder
 
 ## [0.2.5] – 2026-10-21
-- Leerhinweis „Kein Bild geöffnet …“ lesbar (Kontrast-Sammelauftrag hell,
-  QD-089): Die Bildfläche bleibt in beiden Farbschemata grau (`#8a8580`),
+- Leerhinweis „Kein Bild geöffnet …“ lesbar: Die Bildfläche bleibt in
+  beiden Farbschemata grau (`#8a8580`),
   darauf erreichte die gedimmte Fensterschrift nur 2,26:1 (hell) bzw.
   2,15:1 (dunkel). Mit `@theme_fg_color` ist AA dort in keiner Deckkraft
   erreichbar (voll: hell 3,02:1, dunkel 2,64:1); der Hinweis nimmt darum
@@ -12,7 +12,7 @@
   Texte und Katalog unverändert.
 
 ## [0.2.4] – 2026-10-21
-- Dunkle Darstellung (CSS-Welle dunkel, QD-081, für Thema 0.2):
+- Dunkle Darstellung (CSS-Welle dunkel, für Thema 0.2):
   - Dunkles Thema auch nach dem Start: GTK 4.22 lädt bei
     `color-scheme prefer-dark` das dunkle CSS nur bei einem Wechsel im
     laufenden Programm; Bilder meldet `gtk-interface-color-scheme` einmal
@@ -27,9 +27,9 @@
 - Sonst wie 0.2.3; Texte und Katalog unverändert.
 
 ## [0.2.3] – 2026-10-20
-- „Bildinformationen“ und „Info“ haben bei jedem Öffnen eine Titelleiste
-  (QD-076, Werkstatt QREL-06 A2.4): Beide Fenster werden beim Schließen
-  zerstört und beim Öffnen neu gebaut, statt verborgen und wieder gezeigt zu
+- „Bildinformationen“ und „Info“ haben bei jedem Öffnen eine Titelleiste:
+  Beide Fenster werden beim Schließen zerstört und beim Öffnen neu gebaut,
+  statt verborgen und wieder gezeigt zu
   werden. labwc 0.9.8 verknüpft die Dekorationsanfrage (KDE-Protokoll) nur
   mit dem ersten xdg_toplevel einer Fläche; GTK 4.22 legt beim Wiederzeigen
   ein neues an und fragt nicht erneut. Ein offenes Fenster wird weiter
@@ -61,8 +61,8 @@
 
 ## [0.2.0] – 2026-10-20, unveröffentlicht
 - Mehrsprachig über GNU gettext (Textdomäne `querencia-bilder`, Crate
-  `gettext-rs` mit `gettext-system`), Muster Editor 0.2.0 (G2-AC,
-  `docs/i18n-muster.md` des Editors): Oberflächentexte im Code englisch im
+  `gettext-rs` mit `gettext-system`), Muster Editor 0.2.0
+  (`docs/i18n-muster.md` des Editors): Oberflächentexte im Code englisch im
   Wortschatz von Eye of GNOME 2.30 (Image, Edit, View, Go, Help, Rotate
   Clockwise, Best Fit, Fullscreen, Slideshow, Image Properties …), Deutsch
   aus `po/de.po` mit dem bisherigen Wortlaut. Ohne passenden Katalog
@@ -76,7 +76,7 @@
   „2.9 kB“). „1 Byte“ statt „1 Bytes“ (Pluralform).
 - Desktop-Datei aus der Vorlage `data/org.querencia.Bilder.desktop.in`
   (englisch, `[de]`-Zeilen aus `po/de.po`); Menüname „Image Viewer“ /
-  „Bildbetrachter“, Kategorien und MimeType wie live seit G2-E.
+  „Bildbetrachter“, Kategorien und MimeType wie bisher.
 - `werkzeug/i18n.py` (aus dem Editor): `.pot`, Abgleich, `.mo`,
   Desktop-Datei, Prüfung; Unit-Test `german_catalog_is_complete`.
 
@@ -88,9 +88,9 @@
 - Zusätzlich Strg+= vergrößern (Eye of GNOME 2.30 / Eye of MATE); +, −,
   Ziffernblock-Plus/-Minus und Strg+Plus/Strg+Minus waren schon belegt.
 - Copyright-Zeile „Querencia Desktop contributors“ in README und COPYRIGHT.
-- Aus G2-V (Zweig `g2v/symbol`): Programmsymbol flächig neu gezeichnet
+- Programmsymbol flächig neu gezeichnet
   (Rahmen, graue Berge, Sonne in Querencia-Orange, kein Verlauf), Stil der
-  übrigen Querencia-Symbole (QD-034); `hicolor/48x48` entfernt (Symbolregel,
+  übrigen Querencia-Symbole; `hicolor/48x48` entfernt (Symbolregel,
   GTK-4.22-Symbolabsturz).
 
 ## [0.1.0] – Prototyp QI-01 (2026-10-18), unveröffentlicht

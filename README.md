@@ -1,8 +1,10 @@
 # Querencia Bilder
 
 Klassischer Bildbetrachter für alle, die Querencia Desktop benutzen. Teil von
-[Querencia Desktop](https://github.com/querencia-desktop/querencia) – einer
+[Querencia Desktop](https://querencialinux.org) – einer
 klassischen Desktopumgebung im GNOME-2-Stil für Wayland (labwc, Rust, GTK 4).
+Installiert wird es zusammen mit Querencia Desktop aus der APT-Quelle;
+Anleitung auf <https://querencialinux.org>.
 
 *English summary:* A classic image viewer modelled on GNOME 2's Eye of GNOME
 2.30; it never writes to image files. Part of Querencia Desktop, a classic
