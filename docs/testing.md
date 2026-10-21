@@ -18,3 +18,5 @@ Repos:
 | 0.2.0 (je Sprache) | `~/projects/querencia-bilder-020/werkzeug/` |  |
 | 0.2.1 (CSS-Welle) | `~/projects/querencia-bilder-css/` |  |
 | 0.2.2 (Menü Grafik) | `~/projects/querencia-bilder-022/werkzeug/` |  |
+| 0.2.4 (dunkel) | `~/projects/querencia-bilder-024/werkzeug/` |  |
+| 0.2.5 (Leerhinweis) | `~/projects/querencia-bilder-025/werkzeug/` |  |

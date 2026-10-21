@@ -285,7 +285,7 @@ impl Viewer {
         // TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
         let empty = gtk::Label::new(Some(&gettext("No image loaded.\n\nImage → Open… (Ctrl+O)")));
         empty.set_justify(gtk::Justification::Center);
-        empty.add_css_class("dim-label");
+        empty.add_css_class("qb-leer");
         let stack = gtk::Stack::new();
         stack.add_named(&empty, Some("leer"));
         stack.add_named(&scroller, Some("bild"));
@@ -950,5 +950,46 @@ mod tests {
             assert!(!CSS.contains(farbe), "feste Hellfarbe {farbe} in style.css");
         }
         assert_eq!(CSS.matches("solid @borders;").count(), 2);
+    }
+
+    /// Relative Leuchtdichte nach WCAG 2.x für "#rrggbb".
+    fn leucht(farbe: &str) -> f64 {
+        let kanal = |i: usize| {
+            let c = f64::from(u8::from_str_radix(&farbe[i..i + 2], 16).unwrap()) / 255.0;
+            if c <= 0.03928 {
+                c / 12.92
+            } else {
+                ((c + 0.055) / 1.055).powf(2.4)
+            }
+        };
+        0.2126 * kanal(1) + 0.7152 * kanal(3) + 0.0722 * kanal(5)
+    }
+
+    fn farbe_nach(selektor: &str, eigenschaft: &str) -> String {
+        let block = CSS.split(selektor).nth(1).expect(selektor);
+        let wert = block.split(eigenschaft).nth(1).expect(eigenschaft);
+        wert.trim_start_matches(':').trim()[..7].to_string()
+    }
+
+    #[test]
+    fn empty_hint_reaches_aa_on_image_area() {
+        // QD-089: Leerhinweis auf der Bildfläche (grau, im Vollbild schwarz)
+        // in beiden Farbschemata mindestens 4,5:1.
+        let paare = [
+            (
+                "stack.qb-stack, scrolledwindow.qb-view, qb-image {",
+                "stack.qb-stack > label.qb-leer {",
+            ),
+            (
+                "window.qb-fullscreen qb-image {",
+                "window.qb-fullscreen stack.qb-stack > label.qb-leer {",
+            ),
+        ];
+        for (grund, schrift) in paare {
+            let g = leucht(&farbe_nach(grund, "background-color"));
+            let s = leucht(&farbe_nach(schrift, "color"));
+            let k = (g.max(s) + 0.05) / (g.min(s) + 0.05);
+            assert!(k >= 4.5, "{schrift} nur {k:.2}:1");
+        }
     }
 }

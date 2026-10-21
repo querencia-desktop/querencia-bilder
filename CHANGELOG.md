@@ -1,5 +1,16 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.5] – 2026-10-21
+- Leerhinweis „Kein Bild geöffnet …“ lesbar (Kontrast-Sammelauftrag hell,
+  QD-089): Die Bildfläche bleibt in beiden Farbschemata grau (`#8a8580`),
+  darauf erreichte die gedimmte Fensterschrift nur 2,26:1 (hell) bzw.
+  2,15:1 (dunkel). Mit `@theme_fg_color` ist AA dort in keiner Deckkraft
+  erreichbar (voll: hell 3,02:1, dunkel 2,64:1); der Hinweis nimmt darum
+  den festen Themenwert `#1a1a1a` (Text in Ansichten), 4,76:1 in beiden
+  Schemata. Im Vollbild ohne Bild (schwarze Fläche) `#dfdbd2`, 15,2:1.
+- Sonst wie 0.2.4; hell und dunkel außer dem Leerhinweis pixelgleich,
+  Texte und Katalog unverändert.
+
 ## [0.2.4] – 2026-10-21
 - Dunkle Darstellung (CSS-Welle dunkel, QD-081, für Thema 0.2):
   - Dunkles Thema auch nach dem Start: GTK 4.22 lädt bei

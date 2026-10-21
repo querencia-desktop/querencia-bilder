@@ -62,6 +62,18 @@ window.qb-fullscreen qb-image {
   background-color: #000000;
 }
 
+/* Leerhinweis: Die Bildfläche bleibt in beiden Farbschemata grau (im
+   Vollbild schwarz), darum feste Schrift aus dem Thema statt gedimmter
+   Fensterschrift (QD-089): #1a1a1a (Text in Ansichten) erreicht 4,76:1
+   auf #8a8580, #dfdbd2 (Fensterschrift dunkel) 15,2:1 auf Schwarz. */
+stack.qb-stack > label.qb-leer {
+  color: #1a1a1a;
+}
+
+window.qb-fullscreen stack.qb-stack > label.qb-leer {
+  color: #dfdbd2;
+}
+
 box.qb-statusbar {
   border-top: 1px solid @borders;
   padding: 2px 8px;
