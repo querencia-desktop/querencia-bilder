@@ -13,7 +13,7 @@ Repos:
 
 | Fassung | Prüfgerüst | Bericht |
 |---|---|---|
-| QI-01 (Prototyp) | `~/projects/querencia-werkstatt-w5-bilder/werkzeug/` |  |
+| QI-01 (Prototyp) | Arbeitsordner des Prototyps (nicht im Repo) |  |
 | 0.1.1 | `~/projects/querencia-bilder-011/werkzeug/` |  |
 | 0.2.0 (je Sprache) | `~/projects/querencia-bilder-020/werkzeug/` |  |
 | 0.2.1 (CSS-Welle) | `~/projects/querencia-bilder-css/` |  |

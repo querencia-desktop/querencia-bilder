@@ -87,8 +87,7 @@
 - Info-Fenster schließt mit Escape (wie „Bildinformationen“ und Eye of GNOME).
 - Zusätzlich Strg+= vergrößern (Eye of GNOME 2.30 / Eye of MATE); +, −,
   Ziffernblock-Plus/-Minus und Strg+Plus/Strg+Minus waren schon belegt.
-- Copyright-Zeile „Querencia Desktop contributors“ in README und
-  LICENSE-Kopf (Lizenzentscheidung Q5).
+- Copyright-Zeile „Querencia Desktop contributors“ in README und COPYRIGHT.
 - Aus G2-V (Zweig `g2v/symbol`): Programmsymbol flächig neu gezeichnet
   (Rahmen, graue Berge, Sonne in Querencia-Orange, kein Verlauf), Stil der
   übrigen Querencia-Symbole (QD-034); `hicolor/48x48` entfernt (Symbolregel,
