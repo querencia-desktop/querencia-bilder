@@ -13,8 +13,8 @@ Oberfläche englisch und deutsch über GNU gettext (`po/`).
 
 | | |
 |---|---|
-| Version | 0.2.1 (Tag `bilder/0.2.1`; ändert gegenüber 0.2.0 nur die Auswahlfarbe der Schrift) |
-| Auf der Entwicklungs-VM | 0.2.1 live seit 20.10.2026; 0.2.2 (Menü „Grafik“ statt „Zubehör“, Tag `bilder/0.2.2`, Zweig `v0.2.2`) geprüft und freigegeben, noch nicht aktiviert |
+| Version | 0.2.6 (Tag `bilder/0.2.6`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und Fehler melden) |
+| Auf der Entwicklungs-VM | 0.2.5 live seit 21.10.2026; 0.2.6 wartet auf Freigabe |
 | Letzte Prüfung | 0.2.0: 13/13 Unit-Tests, `i18n.py pruefen` PASS, GUI Deutsch/Englisch × 1024×768/1920×1080 je 35/35 (isoliert) |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22 |
 

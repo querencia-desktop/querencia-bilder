@@ -1,5 +1,17 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.6] – 2026-10-22
+- Info-Dialog wie in den übrigen Querencia-Programmen: Hinweis „Alpha –
+  nicht für den Alltag freigegeben“ (statt „Prototyp“), Website
+  querencialinux.org, „© 2026 Querencia Desktop contributors“, Lizenz
+  GPL-3.0-or-later; der Tastaturfokus liegt auf „Schließen“. Englisch heißt
+  er „About Image Viewer“ (wie im Anwendungsmenü), deutsch weiter „Info zu
+  Querencia Bilder“.
+- Hilfe-Menü mit „Online-Hilfe“ (querencialinux.org/de/docs/, englische
+  Oberfläche /en/docs/) und „Fehler melden“ (neue Fehlermeldung auf GitHub);
+  beides öffnet der Standardbrowser der Sitzung.
+- Katalog ohne interne Kennungen.
+
 ## [0.2.5] – 2026-10-21
 - Leerhinweis „Kein Bild geöffnet …“ lesbar (Kontrast-Sammelauftrag hell,
   QD-089): Die Bildfläche bleibt in beiden Farbschemata grau (`#8a8580`),
