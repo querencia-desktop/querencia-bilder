@@ -15,7 +15,7 @@ Oberfläche englisch und deutsch über GNU gettext (`po/`).
 |---|---|
 | Version | 0.2.6 (Tag `bilder/0.2.6`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und Fehler melden) |
 | Auf der Entwicklungs-VM | 0.2.5 live seit 21.10.2026; 0.2.6 wartet auf Freigabe |
-| Letzte Prüfung | 0.2.0: 13/13 Unit-Tests, `i18n.py pruefen` PASS, GUI Deutsch/Englisch × 1024×768/1920×1080 je 35/35 (isoliert) |
+| Letzte Prüfung | 0.2.6 (22.10.2026): 16/16 Unit-Tests, Clippy sauber, `i18n.py pruefen` PASS; isoliert Deutsch/Englisch 1024×768 mit Browser-Attrappe: Online-Hilfe öffnet /de/docs/ bzw. /en/docs/, Fehler melden die GitHub-Seite (je über die Zugriffstaste), Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22 |
 
 Änderungen je Version: [CHANGELOG.md](CHANGELOG.md).
