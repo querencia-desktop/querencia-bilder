@@ -13,10 +13,10 @@ Repos:
 
 | Fassung | Prüfgerüst | Bericht |
 |---|---|---|
-| QI-01 (Prototyp) | `~/projects/querencia-werkstatt-w5-bilder/werkzeug/` |  |
-| 0.1.1 | `~/projects/querencia-bilder-011/werkzeug/` |  |
-| 0.2.0 (je Sprache) | `~/projects/querencia-bilder-020/werkzeug/` |  |
-| 0.2.1 (CSS-Welle) | `~/projects/querencia-bilder-css/` |  |
-| 0.2.2 (Menü Grafik) | `~/projects/querencia-bilder-022/werkzeug/` |  |
-| 0.2.4 (dunkel) | `~/projects/querencia-bilder-024/werkzeug/` |  |
-| 0.2.5 (Leerhinweis) | `~/projects/querencia-bilder-025/werkzeug/` |  |
+| QI-01 (Prototyp) | Arbeitsordner des Prototyps (nicht im Repo) |  |
+| 0.1.1 | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
+| 0.2.0 (je Sprache) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
+| 0.2.1 (CSS-Welle) | Arbeitsordner der Fassung (nicht im Repo) |  |
+| 0.2.2 (Menü Grafik) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
+| 0.2.4 (dunkel) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
+| 0.2.5 (Leerhinweis) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
