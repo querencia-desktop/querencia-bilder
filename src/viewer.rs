@@ -154,7 +154,15 @@ fn menu_model() -> gio::Menu {
     );
     bar.append_submenu(
         Some(&gettext("_Help")),
-        &submenu(&[section(&[(gettext("_About"), "win.about")])]),
+        &submenu(&[
+            section(&[
+                // TRANSLATORS: Hilfe-Menü; Online-Hilfe und Fehlermeldung öffnen
+                // den Browser. Zugriffstasten im Menü verschieden halten.
+                (gettext("Online _Help"), "win.online-help"),
+                (gettext("_Report a Bug"), "win.report-bug"),
+            ]),
+            section(&[(gettext("_About"), "win.about")]),
+        ]),
     );
     bar
 }
@@ -741,6 +749,11 @@ impl Viewer {
                 }
             }),
         );
+        add(
+            "online-help",
+            Box::new(|v| open_uri(&v.window, &online_help())),
+        );
+        add("report-bug", Box::new(|v| open_uri(&v.window, REPORT_BUG)));
         add("about", Box::new(|v| about(&v.window)));
 
         for (name, which) in [("toolbar", 0), ("statusbar", 1)] {
@@ -882,17 +895,40 @@ thread_local! {
     static ABOUT: glib::WeakRef<gtk::Window> = glib::WeakRef::new();
 }
 
+/// Website von Querencia Desktop (Info-Dialog).
+const WEBSITE: &str = "https://querencialinux.org";
+/// Neue Fehlermeldung im gemeinsamen Repo (Hilfe → Fehler melden).
+const REPORT_BUG: &str = "https://github.com/querencia-desktop/querencia/issues/new/choose";
+
+/// Adresse der Online-Hilfe in der Sprache der Oberfläche: Die Adresse steht
+/// selbst im Katalog, gettext wählt sie wie jeden Text nach der Locale
+/// (ohne Katalog Englisch).
+fn online_help() -> String {
+    // TRANSLATORS: Adresse der Online-Hilfe; nur das Sprachkürzel anpassen
+    // (deutsch …/de/docs/).
+    gettext("https://querencialinux.org/en/docs/")
+}
+
+/// Öffnet `uri` mit dem Standardprogramm der Sitzung (wie xdg-open).
+fn open_uri(parent: &impl IsA<gtk::Window>, uri: &str) {
+    let context = WidgetExt::display(parent.as_ref()).app_launch_context();
+    if let Err(err) = gio::AppInfo::launch_default_for_uri(uri, Some(&context)) {
+        eprintln!("querencia-bilder: {uri} nicht geöffnet: {err}");
+    }
+}
+
 /// „About“ („Info“): wird bei jedem Öffnen neu gebaut und beim Schließen
 /// zerstört (QD-076, siehe info::show); Escape schließt wie der Knopf.
+/// Programmsymbol, Name, Version, Hinweis auf die Alpha, Website, Copyright
+/// und Lizenz; der Tastaturfokus liegt auf „Schließen“.
 fn about(parent: &gtk::ApplicationWindow) {
     if let Some(w) = ABOUT.with(|a| a.upgrade()) {
         w.present();
         return;
     }
-    let window = info::dialog_window(
-        parent.upcast_ref(),
-        &gettext_f("About {name}", &[("name", APP_NAME)]),
-    );
+    // TRANSLATORS: Fenstertitel des Info-Dialogs; deutsch mit dem Eigennamen
+    // „Querencia Bilder“, englisch mit dem Namen aus dem Anwendungsmenü.
+    let window = info::dialog_window(parent.upcast_ref(), &gettext("About Image Viewer"));
     window.set_modal(true);
     let body = gtk::Box::new(gtk::Orientation::Vertical, 8);
     body.set_margin_top(18);
@@ -904,16 +940,35 @@ fn about(parent: &gtk::ApplicationWindow) {
     img.set_pixel_size(64);
     body.append(&img);
     let name = gtk::Label::new(None);
+    // TRANSLATORS: Programmname und Version im Info-Dialog; deutsch
+    // „Querencia Bilder {version}“.
+    let title = gettext_f(
+        "Image Viewer {version}",
+        &[("version", env!("CARGO_PKG_VERSION"))],
+    );
     name.set_markup(&format!(
-        "<b><big>{APP_NAME} {}</big></b>",
-        env!("CARGO_PKG_VERSION")
+        "<b><big>{}</big></b>",
+        glib::markup_escape_text(&title)
     ));
     let text = gtk::Label::new(Some(&gettext(
         "Classic image viewer for Querencia Desktop\nmodelled on Eye of GNOME 2.30.\n\n\
-         Images are only displayed, never changed.\nPrototype – not released for everyday use.",
+         Images are only displayed, never changed.",
     )));
     text.set_justify(gtk::Justification::Center);
-    let lic = gtk::Label::new(Some(&gettext("License: GNU GPL, version 3 or later")));
+    let alpha = gtk::Label::new(Some(&gettext("Alpha – not released for everyday use.")));
+    let website = gtk::Label::new(None);
+    website.set_markup(&format!("<a href=\"{WEBSITE}\">querencialinux.org</a>"));
+    // Wie die Einträge im Hilfe-Menü über GIO statt über das Portal öffnen.
+    let ww = window.downgrade();
+    website.connect_activate_link(move |_, uri| {
+        if let Some(w) = ww.upgrade() {
+            open_uri(&w, uri);
+        }
+        glib::Propagation::Stop
+    });
+    let copyright = gtk::Label::new(Some("© 2026 Querencia Desktop contributors"));
+    copyright.add_css_class("dim-label");
+    let lic = gtk::Label::new(Some(&gettext("License: GPL-3.0-or-later")));
     lic.add_css_class("dim-label");
     let close = gtk::Button::with_mnemonic(&gettext("_Close"));
     close.set_halign(gtk::Align::End);
@@ -921,6 +976,9 @@ fn about(parent: &gtk::ApplicationWindow) {
     for w in [
         name.upcast_ref::<gtk::Widget>(),
         text.upcast_ref(),
+        alpha.upcast_ref(),
+        website.upcast_ref(),
+        copyright.upcast_ref(),
         lic.upcast_ref(),
         close.upcast_ref(),
     ] {
@@ -936,6 +994,7 @@ fn about(parent: &gtk::ApplicationWindow) {
     });
     ABOUT.with(|a| a.set(Some(&window)));
     window.present();
+    close.grab_focus();
 }
 
 #[cfg(test)]

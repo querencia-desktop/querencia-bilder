@@ -42,8 +42,8 @@ Anwendungskennung (App-ID): `org.querencia.Bilder` · Binary:
 
 | | |
 |---|---|
-| Version | 0.2.5 (Tag `bilder/0.2.5`; dunkle Darstellung seit 0.2.4, lesbarer Leerhinweis) |
-| Letzte Prüfung | 21.10.2026: 13 Unit-Tests, `i18n.py pruefen`; isolierte GUI-Prüfung Deutsch und Englisch bei 1024×768 und 1920×1080, hell und dunkel |
+| Version | 0.2.6 (Tag `bilder/0.2.6`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.2.4 dunkle Darstellung, seit 0.2.5 lesbarer Leerhinweis |
+| Letzte Prüfung | 22.10.2026 (0.2.6): 16 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isolierte GUI-Prüfung Deutsch und Englisch bei 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.2.5): isoliert Deutsch und Englisch bei 1024×768 und 1920×1080, hell und dunkel |
 | Bekannte Lücken | GIF nur erstes Bild; Programmname und Fenstertitel bleiben „Querencia Bilder“; Meldungen von gdk-pixbuf und dem GTK-Dateiwähler kommen aus deren Katalogen; Diagnoseausgaben auf stderr deutsch; die isolierte GUI-Prüfung liegt noch nicht in diesem Repo |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Rust 1.93 |
 | Nicht getestet | andere Distributionen, HiDPI, Mehrmonitor |

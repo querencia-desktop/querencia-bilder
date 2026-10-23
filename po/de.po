@@ -8,8 +8,8 @@ msgstr ""
 "Project-Id-Version: querencia-bilder\n"
 "Report-Msgid-Bugs-To: \n"
 "POT-Creation-Date: \n"
-"PO-Revision-Date: 2026-10-20 01:30+0200\n"
-"Last-Translator: Querencia Desktop <147073098+pottrauschen@users.noreply.github.com>\n"
+"PO-Revision-Date: 2026-10-22 03:41+0200\n"
+"Last-Translator: Querencia Desktop contributors\n"
 "Language-Team: Deutsch (Querencia)\n"
 "Language: de\n"
 "MIME-Version: 1.0\n"
@@ -94,17 +94,17 @@ msgstr "Anzeige"
 msgid "rotated by {degrees}° (file unchanged)"
 msgstr "um {degrees}° gedreht (Datei unverändert)"
 
-#: src/info.rs:124
+#: src/info.rs:117
 msgid "Image Properties"
 msgstr "Bildinformationen"
 
 #. TRANSLATORS: Bezeichnung einer Zeile in den Bildinformationen, fett
-#: src/info.rs:151
+#: src/info.rs:170
 #, no-c-format
 msgid "{label}:"
 msgstr "{label}:"
 
-#: src/info.rs:163 src/viewer.rs:919
+#: src/info.rs:189 src/viewer.rs:973
 msgid "_Close"
 msgstr "_Schließen"
 
@@ -198,52 +198,61 @@ msgstr "_Letztes Bild"
 msgid "_Help"
 msgstr "_Hilfe"
 
-#: src/viewer.rs:157
+#. TRANSLATORS: Hilfe-Menü; Online-Hilfe und Fehlermeldung öffnen den Browser. Zugriffstasten im Menü verschieden halten.
+#: src/viewer.rs:161
+msgid "Online _Help"
+msgstr "_Online-Hilfe"
+
+#: src/viewer.rs:162
+msgid "_Report a Bug"
+msgstr "_Fehler melden"
+
+#: src/viewer.rs:164
 msgid "_About"
 msgstr "_Info"
 
-#: src/viewer.rs:229
+#: src/viewer.rs:237
 msgid "Previous Image"
 msgstr "Vorheriges Bild"
 
-#: src/viewer.rs:230
+#: src/viewer.rs:238
 msgid "Next Image"
 msgstr "Nächstes Bild"
 
-#: src/viewer.rs:233
+#: src/viewer.rs:241
 msgid "Zoom In"
 msgstr "Vergrößern"
 
-#: src/viewer.rs:234
+#: src/viewer.rs:242
 msgid "Zoom Out"
 msgstr "Verkleinern"
 
-#: src/viewer.rs:235
+#: src/viewer.rs:243
 msgid "Normal Size"
 msgstr "Normale Größe"
 
-#: src/viewer.rs:236
+#: src/viewer.rs:244
 msgid "Best Fit"
 msgstr "Optimale Größe"
 
-#: src/viewer.rs:241
+#: src/viewer.rs:249
 msgid "Rotate Counterclockwise"
 msgstr "Gegen den Uhrzeigersinn drehen"
 
-#: src/viewer.rs:246
+#: src/viewer.rs:254
 msgid "Rotate Clockwise"
 msgstr "Im Uhrzeigersinn drehen"
 
-#: src/viewer.rs:251
+#: src/viewer.rs:259
 msgid "Fullscreen"
 msgstr "Vollbild"
 
-#: src/viewer.rs:254
+#: src/viewer.rs:262
 msgid "Slideshow"
 msgstr "Diashow"
 
 #. TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
-#: src/viewer.rs:286
+#: src/viewer.rs:294
 msgid ""
 "No image loaded.\n"
 "\n"
@@ -253,76 +262,89 @@ msgstr ""
 "\n"
 "Bild → Öffnen … (Strg+O)"
 
-#: src/viewer.rs:452
+#: src/viewer.rs:460
 msgid "Loading…"
 msgstr "Wird geladen …"
 
-#: src/viewer.rs:464
+#: src/viewer.rs:472
 msgid "Loading cancelled"
 msgstr "Ladevorgang abgebrochen"
 
-#: src/viewer.rs:465
+#: src/viewer.rs:473
 msgid "Only local files are supported."
 msgstr "Nur lokale Dateien werden unterstützt."
 
-#: src/viewer.rs:492
+#: src/viewer.rs:500
 #, no-c-format
 msgid "Could not load image “{name}”."
 msgstr "Das Bild „{name}“ konnte nicht geladen werden."
 
 #. TRANSLATORS: Statusleiste, Position in der Bildliste
-#: src/viewer.rs:527
+#: src/viewer.rs:535
 #, no-c-format
 msgid "Image {index} of {count}"
 msgstr "Bild {index} von {count}"
 
 #. TRANSLATORS: Statusleiste, Bild konnte nicht geladen werden
-#: src/viewer.rs:545
+#: src/viewer.rs:553
 msgid "Not readable"
 msgstr "Nicht lesbar"
 
 #. TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
-#: src/viewer.rs:566
+#: src/viewer.rs:574
 #, no-c-format
 msgid "{dimensions}   {size}   rotated (not saved)"
 msgstr "{dimensions}   {size}   gedreht (nicht gespeichert)"
 
 #. TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
-#: src/viewer.rs:569
+#: src/viewer.rs:577
 #, no-c-format
 msgid "{dimensions}   {size}"
 msgstr "{dimensions}   {size}"
 
-#: src/viewer.rs:645
+#: src/viewer.rs:653
 msgid "Images"
 msgstr "Bilder"
 
-#: src/viewer.rs:650
+#: src/viewer.rs:658
 msgid "Open Image"
 msgstr "Bild öffnen"
 
-#: src/viewer.rs:894
-#, no-c-format
-msgid "About {name}"
-msgstr "Info zu {name}"
+#. TRANSLATORS: Adresse der Online-Hilfe; nur das Sprachkürzel anpassen (deutsch …/de/docs/).
+#: src/viewer.rs:909
+msgid "https://querencialinux.org/en/docs/"
+msgstr "https://querencialinux.org/de/docs/"
 
-#: src/viewer.rs:912
+#. TRANSLATORS: Fenstertitel des Info-Dialogs; deutsch mit dem Eigennamen „Querencia Bilder“, englisch mit dem Namen aus dem Anwendungsmenü.
+#: src/viewer.rs:931
+msgid "About Image Viewer"
+msgstr "Info zu Querencia Bilder"
+
+#. TRANSLATORS: Programmname und Version im Info-Dialog; deutsch „Querencia Bilder {version}“.
+#: src/viewer.rs:945
+#, no-c-format
+msgid "Image Viewer {version}"
+msgstr "Querencia Bilder {version}"
+
+#: src/viewer.rs:953
 msgid ""
 "Classic image viewer for Querencia Desktop\n"
 "modelled on Eye of GNOME 2.30.\n"
 "\n"
-"Images are only displayed, never changed.\n"
-"Prototype – not released for everyday use."
+"Images are only displayed, never changed."
 msgstr ""
 "Klassischer Bildbetrachter für Querencia Desktop\n"
 "nach dem Vorbild von Eye of GNOME 2.30.\n"
 "\n"
-"Bilder werden nur angezeigt, nie verändert.\n"
-"Prototyp – nicht für den Alltag freigegeben."
+"Bilder werden nur angezeigt, nie verändert."
 
-#: src/viewer.rs:917
-msgid "License: GNU GPL, version 3 or later"
-msgstr "Lizenz: GNU GPL, Version 3 oder neuer"
+#: src/viewer.rs:958
+msgid "Alpha – not released for everyday use."
+msgstr "Alpha – nicht für den Alltag freigegeben."
+
+#: src/viewer.rs:971
+msgid "License: GPL-3.0-or-later"
+msgstr "Lizenz: GPL-3.0-or-later"
 
 #. TRANSLATORS: Zoomstufe in der Statusleiste; {value} ist die Zahl („12.5“)
 #: src/zoom.rs:39
