@@ -22,8 +22,9 @@ the user interface is available in English and German.
   Bildinformationen (Alt+Eingabe).
 - Formate: PNG, JPEG, GIF (erstes Bild), BMP, WebP und alles, was das
   System-gdk-pixbuf lädt (Ubuntu 26.04: glycin-Lader, z. B. AVIF, TIFF).
-- Oberfläche auf Englisch und Deutsch über GNU gettext (englische msgid,
-  `po/de.po`); Auswahl über `LANGUAGE`/`LANG`.
+- Oberfläche auf Englisch, Deutsch, Italienisch, Spanisch und Französisch
+  über GNU gettext (englische msgid, `po/<sprache>.po`); Auswahl über
+  `LANGUAGE`/`LANG`.
 - Bewusst **nicht** Teil dieses Programms: Bearbeiten und Speichern
   (Querencia Bilder schreibt nie in Bilddateien), Miniaturleiste, Drucken,
   „In den Papierkorb“, EXIF-Details.
@@ -34,7 +35,7 @@ Anwendungskennung (App-ID): `org.querencia.Bilder` · Binary:
 | Datei | Inhalt |
 |---|---|
 | `src/` | Fenster, Ansicht, Ordnerliste, Zoom, Bildinformationen, Ressource, Übersetzung (`i18n.rs`) |
-| `po/` | Vorlage `querencia-bilder.pot`, Deutsch `de.po` |
+| `po/` | Vorlage `querencia-bilder.pot`, Übersetzungen `de.po`, `it.po`, `es.po`, `fr.po` |
 | `data/` | Desktop-Datei (aus `.desktop.in`), Programmsymbol (PNG 16–256 und SVG, ohne 48×48), eingebettete Ressource |
 | `werkzeug/i18n.py` | Kataloge prüfen und erzeugen ohne GNU gettext |
 
@@ -42,8 +43,8 @@ Anwendungskennung (App-ID): `org.querencia.Bilder` · Binary:
 
 | | |
 |---|---|
-| Version | 0.2.6 (Tag `bilder/0.2.6`; Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.2.4 dunkle Darstellung, seit 0.2.5 lesbarer Leerhinweis |
-| Letzte Prüfung | 22.10.2026 (0.2.6): 16 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isolierte GUI-Prüfung Deutsch und Englisch bei 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.2.5): isoliert Deutsch und Englisch bei 1024×768 und 1920×1080, hell und dunkel |
+| Version | 0.2.7 (Tag `bilder/0.2.7`; Italienisch, Spanisch, Französisch); seit 0.2.6 Info-Dialog mit Alpha-Hinweis, Website, Copyright und Lizenz, Hilfe-Menü mit Online-Hilfe und „Fehler melden“); seit 0.2.4 dunkle Darstellung, seit 0.2.5 lesbarer Leerhinweis |
+| Letzte Prüfung | 26.10.2026 (0.2.7): 16 Unit-Tests, Clippy sauber, `i18n.py pruefen` und `msgfmt --check` für de/es/fr/it; isolierte GUI-Prüfung de/en/it/es/fr bei 1024×768: alle Menüs, Bildinformationen, Online-Hilfe, „Fehler melden“, Info-Dialog (je 12 PASS). 22.10.2026 (0.2.6): 16 Unit-Tests, Clippy sauber, `i18n.py pruefen`; isolierte GUI-Prüfung Deutsch und Englisch bei 1024×768: Online-Hilfe, „Fehler melden“ (je über die Zugriffstaste) und Info-Dialog. 21.10.2026 (0.2.5): isoliert Deutsch und Englisch bei 1024×768 und 1920×1080, hell und dunkel |
 | Bekannte Lücken | GIF nur erstes Bild; Programmname und Fenstertitel bleiben „Querencia Bilder“; Meldungen von gdk-pixbuf und dem GTK-Dateiwähler kommen aus deren Katalogen; Diagnoseausgaben auf stderr deutsch; die isolierte GUI-Prüfung liegt noch nicht in diesem Repo |
 | Getestet auf | Ubuntu 26.04, labwc 0.9.8, GTK 4.22, Rust 1.93 |
 | Nicht getestet | andere Distributionen, HiDPI, Mehrmonitor |
@@ -66,7 +67,7 @@ Das Ergebnis liegt unter `target/release/querencia-bilder`. Übersetzungen
 (ohne Abhängigkeiten; GNU gettext ≥ 0.23 zum Gegenprüfen):
 
 ```bash
-python3 werkzeug/i18n.py pruefen    # .pot aktuell, de.po vollständig
+python3 werkzeug/i18n.py pruefen    # .pot aktuell, alle .po vollständig
 python3 werkzeug/i18n.py mo <ziel>  # <ziel>/de/LC_MESSAGES/querencia-bilder.mo
 python3 werkzeug/i18n.py desktop data/org.querencia.Bilder.desktop.in data/org.querencia.Bilder.desktop
 ```

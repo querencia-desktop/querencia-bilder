@@ -20,3 +20,4 @@ Repos:
 | 0.2.2 (Menü Grafik) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
 | 0.2.4 (dunkel) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
 | 0.2.5 (Leerhinweis) | Arbeitsordner der Fassung, `werkzeug/` (nicht im Repo) |  |
+| 0.2.7 (it/es/fr) | Prüfgerüst von 0.2.6 erweitert um it/es/fr und ein Szenario für alle Menüs (nicht im Repo) |  |
