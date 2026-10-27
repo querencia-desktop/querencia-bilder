@@ -8,8 +8,9 @@ Anleitung auf <https://querencialinux.org>.
 
 *English summary:* A classic image viewer modelled on GNOME 2's Eye of GNOME
 2.30; it never writes to image files. Part of Querencia Desktop, a classic
-GNOME-2-style desktop for Wayland. Alpha software; documentation is in German,
-the user interface is available in English and German.
+GNOME-2-style desktop for Wayland. Alpha software; the user interface is
+available in German, English, Italian, Spanish and French; documentation is in
+German.
 
 > **Alpha.** Keine Miniaturleiste, kein Drucken, keine Animationen. Keine
 > Sicherheits- oder Datenverlustgarantie.
