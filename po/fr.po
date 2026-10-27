@@ -1,0 +1,352 @@
+# Querencia Bilder: französische Übersetzung.
+# Copyright (C) 2026 Querencia Desktop contributors
+# Diese Datei steht unter derselben Lizenz wie Querencia Bilder (GPL-3.0-or-later).
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: querencia-bilder\n"
+"Report-Msgid-Bugs-To: \n"
+"POT-Creation-Date: \n"
+"PO-Revision-Date: 2026-10-26 22:45+0100\n"
+"Last-Translator: Querencia Desktop contributors\n"
+"Language-Team: Français (Querencia)\n"
+"Language: fr\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n > 1);\n"
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Name
+#. TRANSLATORS: Desktop-Datei, Schlüssel GenericName
+#: data/org.querencia.Bilder.desktop.in:13 data/org.querencia.Bilder.desktop.in:14
+msgid "Image Viewer"
+msgstr "Visionneur d’images"
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Comment
+#: data/org.querencia.Bilder.desktop.in:15
+msgid "View images"
+msgstr "Voir des images"
+
+#. TRANSLATORS: Desktop-Datei, Schlüssel Keywords (Liste, Einträge mit ; trennen und abschließen)
+#: data/org.querencia.Bilder.desktop.in:22
+msgid "Image;Picture;Photo;Viewer;"
+msgstr "Image;Photo;Visionneur;Visionneuse;"
+
+#. TRANSLATORS: Dezimalzeichen in Zoomstufe und Dateigröße („12.5%“, „2.9 kB“)
+#: src/i18n.rs:79
+msgctxt "decimal separator"
+msgid "."
+msgstr ","
+
+#: src/i18n.rs:159 src/i18n.rs:160 src/info.rs:20
+#, no-c-format
+msgid "{n} byte"
+msgid_plural "{n} bytes"
+msgstr[0] "{n} octet"
+msgstr[1] "{n} octets"
+
+#: src/info.rs:32
+#, no-c-format
+msgid "{width} × {height} pixels"
+msgstr "{width} × {height} pixels"
+
+#: src/info.rs:52
+msgid "Name"
+msgstr "Nom"
+
+#: src/info.rs:54
+msgid "Folder"
+msgstr "Dossier"
+
+#: src/info.rs:63
+msgid "Format"
+msgstr "Format"
+
+#: src/info.rs:64 src/info.rs:66
+msgid "Dimensions"
+msgstr "Dimensions"
+
+#: src/info.rs:73
+msgid "File Size"
+msgstr "Taille du fichier"
+
+#: src/info.rs:75
+msgid "File Type"
+msgstr "Type de fichier"
+
+#. TRANSLATORS: Datum und Uhrzeit der letzten Änderung, Format von g_date_time_format (%d Tag, %m Monat, %Y Jahr, %H:%M Uhrzeit)
+#: src/info.rs:82
+msgid "%Y-%m-%d %H:%M"
+msgstr "%d/%m/%Y %H:%M"
+
+#: src/info.rs:84
+msgid "Modified"
+msgstr "Modifié"
+
+#. TRANSLATORS: Zeile „Anzeige“ in den Bildinformationen, nur bei gedrehter Anzeige
+#: src/info.rs:91
+msgid "Display"
+msgstr "Affichage"
+
+#: src/info.rs:92
+#, no-c-format
+msgid "rotated by {degrees}° (file unchanged)"
+msgstr "pivotée de {degrees}° (fichier inchangé)"
+
+#: src/info.rs:117
+msgid "Image Properties"
+msgstr "Propriétés de l’image"
+
+#. TRANSLATORS: Bezeichnung einer Zeile in den Bildinformationen, fett
+#: src/info.rs:170
+#, no-c-format
+msgid "{label}:"
+msgstr "{label} :"
+
+#: src/info.rs:189 src/viewer.rs:973
+msgid "_Close"
+msgstr "_Fermer"
+
+#: src/viewer.rs:112
+msgid "_Image"
+msgstr "_Image"
+
+#: src/viewer.rs:114
+msgid "_Open…"
+msgstr "_Ouvrir…"
+
+#: src/viewer.rs:115
+msgid "Prope_rties"
+msgstr "_Propriétés"
+
+#. TRANSLATORS: Menü „Bild“; Knöpfe in Dialogen nehmen „_Close“ ohne Kontext
+#: src/viewer.rs:117
+msgctxt "Image menu"
+msgid "_Close"
+msgstr "_Fermer"
+
+#: src/viewer.rs:121
+msgid "_Edit"
+msgstr "É_dition"
+
+#: src/viewer.rs:123
+msgid "_Rotate Clockwise"
+msgstr "_Rotation horaire"
+
+#: src/viewer.rs:124
+msgid "Rotate Counterc_lockwise"
+msgstr "Rotation a_nti-horaire"
+
+#: src/viewer.rs:128
+msgid "_View"
+msgstr "_Affichage"
+
+#: src/viewer.rs:131
+msgid "_Toolbar"
+msgstr "_Barre d’outils"
+
+#: src/viewer.rs:132
+msgid "_Statusbar"
+msgstr "Barre d’é_tat"
+
+#: src/viewer.rs:135
+msgid "_Zoom In"
+msgstr "_Zoom avant"
+
+#: src/viewer.rs:136
+msgid "Zoom _Out"
+msgstr "Zoom a_rrière"
+
+#: src/viewer.rs:137
+msgid "_Normal Size"
+msgstr "Taille _normale"
+
+#: src/viewer.rs:138
+msgid "_Best Fit"
+msgstr "Meilleur a_justement"
+
+#: src/viewer.rs:141
+msgid "_Fullscreen"
+msgstr "_Plein écran"
+
+#: src/viewer.rs:142
+msgid "S_lideshow"
+msgstr "_Diaporama"
+
+#: src/viewer.rs:147
+msgid "_Go"
+msgstr "A_ller"
+
+#: src/viewer.rs:149
+msgid "_Previous Image"
+msgstr "Image _précédente"
+
+#: src/viewer.rs:150
+msgid "_Next Image"
+msgstr "Image _suivante"
+
+#: src/viewer.rs:151
+msgid "_First Image"
+msgstr "Pre_mière image"
+
+#: src/viewer.rs:152
+msgid "_Last Image"
+msgstr "_Dernière image"
+
+#: src/viewer.rs:156
+msgid "_Help"
+msgstr "Aid_e"
+
+#. TRANSLATORS: Hilfe-Menü; Online-Hilfe und Fehlermeldung öffnen den Browser. Zugriffstasten im Menü verschieden halten.
+#: src/viewer.rs:161
+msgid "Online _Help"
+msgstr "_Aide en ligne"
+
+#: src/viewer.rs:162
+msgid "_Report a Bug"
+msgstr "_Signaler un bogue"
+
+#: src/viewer.rs:164
+msgid "_About"
+msgstr "À _propos"
+
+#: src/viewer.rs:237
+msgid "Previous Image"
+msgstr "Image précédente"
+
+#: src/viewer.rs:238
+msgid "Next Image"
+msgstr "Image suivante"
+
+#: src/viewer.rs:241
+msgid "Zoom In"
+msgstr "Zoom avant"
+
+#: src/viewer.rs:242
+msgid "Zoom Out"
+msgstr "Zoom arrière"
+
+#: src/viewer.rs:243
+msgid "Normal Size"
+msgstr "Taille normale"
+
+#: src/viewer.rs:244
+msgid "Best Fit"
+msgstr "Meilleur ajustement"
+
+#: src/viewer.rs:249
+msgid "Rotate Counterclockwise"
+msgstr "Rotation anti-horaire"
+
+#: src/viewer.rs:254
+msgid "Rotate Clockwise"
+msgstr "Rotation horaire"
+
+#: src/viewer.rs:259
+msgid "Fullscreen"
+msgstr "Plein écran"
+
+#: src/viewer.rs:262
+msgid "Slideshow"
+msgstr "Diaporama"
+
+#. TRANSLATORS: leeres Fenster; Menüpfad und Tastenkürzel wie in der Oberfläche
+#: src/viewer.rs:294
+msgid ""
+"No image loaded.\n"
+"\n"
+"Image → Open… (Ctrl+O)"
+msgstr ""
+"Aucune image ouverte.\n"
+"\n"
+"Image → Ouvrir… (Ctrl+O)"
+
+#: src/viewer.rs:460
+msgid "Loading…"
+msgstr "Chargement…"
+
+#: src/viewer.rs:472
+msgid "Loading cancelled"
+msgstr "Chargement annulé"
+
+#: src/viewer.rs:473
+msgid "Only local files are supported."
+msgstr "Seuls les fichiers locaux sont pris en charge."
+
+#: src/viewer.rs:500
+#, no-c-format
+msgid "Could not load image “{name}”."
+msgstr "Impossible de charger l’image « {name} »."
+
+#. TRANSLATORS: Statusleiste, Position in der Bildliste
+#: src/viewer.rs:535
+#, no-c-format
+msgid "Image {index} of {count}"
+msgstr "Image {index} sur {count}"
+
+#. TRANSLATORS: Statusleiste, Bild konnte nicht geladen werden
+#: src/viewer.rs:553
+msgid "Not readable"
+msgstr "Illisible"
+
+#. TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
+#: src/viewer.rs:574
+#, no-c-format
+msgid "{dimensions}   {size}   rotated (not saved)"
+msgstr "{dimensions}   {size}   pivotée (non enregistrée)"
+
+#. TRANSLATORS: Statusleiste; die drei Leerzeichen trennen die Felder
+#: src/viewer.rs:577
+#, no-c-format
+msgid "{dimensions}   {size}"
+msgstr "{dimensions}   {size}"
+
+#: src/viewer.rs:653
+msgid "Images"
+msgstr "Images"
+
+#: src/viewer.rs:658
+msgid "Open Image"
+msgstr "Ouvrir une image"
+
+#. TRANSLATORS: Adresse der Online-Hilfe; nur das Sprachkürzel anpassen (deutsch …/de/docs/).
+#: src/viewer.rs:909
+msgid "https://querencialinux.org/en/docs/"
+msgstr "https://querencialinux.org/fr/docs/"
+
+#. TRANSLATORS: Fenstertitel des Info-Dialogs; deutsch mit dem Eigennamen „Querencia Bilder“, englisch mit dem Namen aus dem Anwendungsmenü.
+#: src/viewer.rs:931
+msgid "About Image Viewer"
+msgstr "À propos de Visionneur d’images"
+
+#. TRANSLATORS: Programmname und Version im Info-Dialog; deutsch „Querencia Bilder {version}“.
+#: src/viewer.rs:945
+#, no-c-format
+msgid "Image Viewer {version}"
+msgstr "Visionneur d’images {version}"
+
+#: src/viewer.rs:953
+msgid ""
+"Classic image viewer for Querencia Desktop\n"
+"modelled on Eye of GNOME 2.30.\n"
+"\n"
+"Images are only displayed, never changed."
+msgstr ""
+"Visionneur d’images classique pour Querencia Desktop\n"
+"inspiré d’Eye of GNOME 2.30.\n"
+"\n"
+"Les images sont uniquement affichées, jamais modifiées."
+
+#: src/viewer.rs:958
+msgid "Alpha – not released for everyday use."
+msgstr "Alpha – pas encore prête pour un usage quotidien."
+
+#: src/viewer.rs:971
+msgid "License: GPL-3.0-or-later"
+msgstr "Licence : GPL-3.0-or-later"
+
+#. TRANSLATORS: Zoomstufe in der Statusleiste; {value} ist die Zahl („12.5“)
+#: src/zoom.rs:39
+#, no-c-format
+msgid "{value}%"
+msgstr "{value} %"

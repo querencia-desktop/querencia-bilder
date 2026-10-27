@@ -1,5 +1,18 @@
 # Änderungen – Querencia Bilder
 
+## [0.2.7] – 2026-10-26
+Italienisch, Spanisch, Französisch:
+- Neue Kataloge `po/it.po`, `po/es.po`, `po/fr.po` (je 72 Texte,
+  vollständig): Menüs, Werkzeugleiste, Statusleiste, Bildinformationen,
+  Info-Dialog, Meldungen und Desktop-Datei (`Name[it]=Visualizzatore
+  immagini`, `Name[es]=Visor de imágenes`, `Name[fr]=Visionneur d’images`).
+  Wortschatz Eye of GNOME in der jeweiligen Sprache und die gemeinsame
+  Querencia-Begriffstabelle; Zugriffstasten je Menü eindeutig.
+- Datum in den Bildinformationen landesüblich (`26/10/2026 22:47`),
+  Dezimalkomma in Zoomstufe und Größen, „Online-Hilfe“ öffnet
+  querencialinux.org/it|es|fr/docs/.
+- Sonst keine Änderung: Deutsch, Englisch, Anzeige, Farben und Symbol wie 0.2.6.
+
 ## [0.2.6] – 2026-10-22
 - Info-Dialog wie in den übrigen Querencia-Programmen: Hinweis „Alpha –
   nicht für den Alltag freigegeben“ (statt „Prototyp“), Website
